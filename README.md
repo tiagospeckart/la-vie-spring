@@ -32,7 +32,7 @@ Documentation chapters will be organized as Wiki this [Repository Wiki](https://
 2. [Functional Requirements](https://github.com/tiagospeckart/la-vie-spring/wiki/Functional-Requirements)
 3. [Non-functional Requirements](https://github.com/tiagospeckart/la-vie-spring/wiki/Non%E2%80%90functional-Requirements)
 4. [Business Rules](https://github.com/tiagospeckart/la-vie-spring/wiki/Business-Rules)
-5. [UML Class Diagram](https://github.com/tiagospeckart/la-vie-spring/wiki/UML-Class-Diagram)
+5. [UML Class Diagram](./diagrams/v1_ClassDiagram.png)
 
 ---
 

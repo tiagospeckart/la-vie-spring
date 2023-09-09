@@ -1,0 +1,127 @@
+@startuml
+!theme vibrant
+!define RectANGLE class
+
+' Enum Definitions
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum SessionStatus {
+  COMPLETED
+  PLANNED
+  CANCELLED
+}
+
+' Interfaces
+interface IPersonService {
+  +updatePerson(Person) : void
+  +activate(Person) : void
+  +deactivate(Person) : void
+}
+
+interface IAdminService {
+  +createAdmin() : Admin
+  +updateAdmin(Admin) : void
+  +listAdmins() : List<Admin>
+  +createPsychologist() : Psychologist
+}
+
+interface IPsychologistService {
+  +listPsychologists() : List<Psychologist>
+  +createSession(Psychologist, Client, DateAndTime) : Session
+  +createClient() : Client
+  +updateClient(Client) : void
+  +inactivateClient(Client) : void
+}
+
+interface ISessionService {
+  +beginSession(Session) : bool
+  +endSession(Session) : bool
+  +reschedule(Session, DateTime newDateTime) : bool
+  +updateSession(Session)
+  +cancelSession() : bool
+  +listClientSessions(Client) : List<Session>
+  +listPsychologistSessions(Psychologist) : List<Session>
+  +listClientPsychologistSessions(Client, Psychologist) : List<Session>
+}
+
+' Abstract Classes
+abstract RectANGLE Person {
+  +Name: String
+  +Email: String
+  +Phone: String
+  +Status: Status
+  +createdAt: DateTime
+  +createdBy: String
+  +updatedAt: DateTime
+  +updatedBy: String
+  ---
+  +getters()
+  +setters()
+}
+Person ..|> IPersonService
+
+' Entities
+RectANGLE Admin {
+  +Password: String
+  ---
+  +Admin()
+  +getters()
+  +setters()
+}
+Admin ..|> IAdminService
+
+RectANGLE Psychologist {
+  +Password: String
+  +LicenseNumber: String
+  +SpecializationArea: String
+  +Biography: String
+  ---
+  +Psychologist()
+  +getters()
+  +setters()
+}
+Psychologist ..|> IPsychologistService
+
+RectANGLE Client {
+  +DateOfBirth: Date
+  +Address: String
+  +Observations: Text
+  ---
+  +Client()
+  +getters()
+  +setters()
+}
+
+RectANGLE Session {
+  +Psychologist: Association
+  +Client: Association
+  +DateAndTime: DateTime
+  +SessionNotes: Text
+  +Status: SessionStatus
+  +createdAt: DateTime
+  +createdBy: String
+  +updatedAt: DateTime
+  +updatedBy: String
+  ---
+  +Session(Psychologist, Client)
+  +getters()
+  +setters()
+}
+Session ..|> ISessionService
+
+' Inheritance
+Person <|-- Admin
+Person <|-- Psychologist
+Person <|-- Client
+
+' Relationships
+Admin "1" -- "0..*" Psychologist: creates
+Admin "1" -- "0..*" Client: controls
+Psychologist "1" -- "0..*" Session: manages
+Client "1" -- "0..*" Session: participates in
+Psychologist "0..*" -- "0..*" Client: serves
+
+@enduml
