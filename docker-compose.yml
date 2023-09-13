@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  spring-api:
+    build: .
+    environment:
+      - SERVER_PORT=8080
+      - DATABASE_URL=db-postgresql:5432/psych-clinic
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+    depends_on:
+      db-postgresql:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db-postgresql:
+    image: postgres:latest
+    hostname: db-postgresql
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=psych-clinic
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  app-network:

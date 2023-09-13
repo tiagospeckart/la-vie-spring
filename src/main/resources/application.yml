@@ -1,1 +1,14 @@
-
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+server:
+  error:
+    include-message: always
