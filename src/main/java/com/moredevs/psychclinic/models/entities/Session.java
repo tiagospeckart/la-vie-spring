@@ -21,10 +21,13 @@ public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "psychologist_id")
     private Psychologist psychologist;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @Column(columnDefinition = "timestamp")
