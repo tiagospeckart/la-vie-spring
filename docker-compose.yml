@@ -3,11 +3,14 @@ version: '3.9'
 services:
   spring-api:
     build: .
+    ports:
+      - "8080:8080"
     environment:
       - SERVER_PORT=8080
       - DATABASE_URL=db-postgresql:5432/psych-clinic
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
+      - DATABASE_SCHEMA=la-vie
     depends_on:
       db-postgresql:
         condition: service_healthy

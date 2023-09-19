@@ -1,4 +1,6 @@
 package com.moredevs.psychclinic.service.impl;
 
-public class ClientServiceImpl {
+import com.moredevs.psychclinic.service.ClientService;
+
+public class ClientServiceImpl implements ClientService {
 }
