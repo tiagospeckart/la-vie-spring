@@ -1,5 +1,5 @@
 -- Create the Person table
-CREATE TABLE person (
+CREATE TABLE IF NOT EXISTS person (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(40) NOT NULL,
     phone VARCHAR(30),
@@ -11,7 +11,7 @@ CREATE TABLE person (
 );
 
 -- Create the Client table
-CREATE TABLE client (
+CREATE TABLE IF NOT EXISTS client (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date_of_birth DATE NOT NULL,
     address VARCHAR(150),
@@ -20,7 +20,7 @@ CREATE TABLE client (
 );
 
 -- Create the Psychologist table
-CREATE TABLE psychologist (
+CREATE TABLE IF NOT EXISTS psychologist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     license_number VARCHAR(255) NOT NULL UNIQUE,
@@ -30,14 +30,14 @@ CREATE TABLE psychologist (
 );
 
 -- Create the Admin table
-CREATE TABLE admin (
+CREATE TABLE IF NOT EXISTS admin (
     id INT AUTO_INCREMENT PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     FOREIGN KEY (id) REFERENCES person(id)
 );
 
 -- Create the Session table
-CREATE TABLE session (
+CREATE TABLE IF NOT EXISTS session (
     id INT AUTO_INCREMENT PRIMARY KEY,
     psychologist_id INT,
     client_id INT,
