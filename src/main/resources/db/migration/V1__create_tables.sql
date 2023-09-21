@@ -1,17 +1,9 @@
--- Define ENUM types
-DO $$ BEGIN
-    CREATE TYPE status_enum AS ENUM ('ACTIVE', 'INACTIVE');
-    CREATE TYPE session_status_enum AS ENUM ('ACTIVE', 'INACTIVE', 'CANCELLED');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
-
 -- Create the Client table with columns from Person
 CREATE TABLE IF NOT EXISTS client (
     id SERIAL PRIMARY KEY,
     email VARCHAR(40) NOT NULL,
     phone VARCHAR(30),
-    status status_enum,
+    status VARCHAR(10),
     created_at TIMESTAMP NOT NULL,
     created_by VARCHAR(255),
     updated_at TIMESTAMP NOT NULL,
@@ -26,7 +18,7 @@ CREATE TABLE IF NOT EXISTS psychologist (
     id SERIAL PRIMARY KEY,
     email VARCHAR(40) NOT NULL,
     phone VARCHAR(30),
-    status status_enum,
+    status VARCHAR(10),
     created_at TIMESTAMP NOT NULL,
     created_by VARCHAR(255),
     updated_at TIMESTAMP NOT NULL,
@@ -42,7 +34,7 @@ CREATE TABLE IF NOT EXISTS admin (
     id SERIAL PRIMARY KEY,
     email VARCHAR(40) NOT NULL,
     phone VARCHAR(30),
-    status status_enum,
+    status VARCHAR(10),
     created_at TIMESTAMP NOT NULL,
     created_by VARCHAR(255),
     updated_at TIMESTAMP NOT NULL,
@@ -57,7 +49,7 @@ CREATE TABLE IF NOT EXISTS session (
     client_id INT,
     date_and_time TIMESTAMP NOT NULL,
     session_notes TEXT,
-    session_status session_status_enum,
+    session_status VARCHAR(15),
     created_at TIMESTAMP NOT NULL,
     created_by VARCHAR(255),
     updated_at TIMESTAMP NOT NULL,

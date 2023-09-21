@@ -40,6 +40,7 @@ public class Client {
     private String phone;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "status_enum")
     private Status status;
 
     @NotNull
@@ -51,22 +52,39 @@ public class Client {
 
     private String observations;
 
+    @OneToMany(mappedBy = "client")
+    private List<Session> sessions;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @CreatedBy
     @Column(updatable = false)
+    @CreatedBy
     private String createdBy;
 
-    @LastModifiedDate
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @LastModifiedBy
     @Column(nullable = false)
+    @LastModifiedBy
     private String updatedBy;
 
-    @OneToMany(mappedBy = "client")
-    private List<Session> sessions;
+    // Lifecycle Callbacks
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+        this.createdBy = this.createdBy != null ? this.createdBy : "system";
+        this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+        this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+    }
+
 }

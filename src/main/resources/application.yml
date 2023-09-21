@@ -12,5 +12,9 @@ spring:
   flyway:
     schemas: la-vie
 
+server:
+  error:
+    include-message: always
+
   servlet:
-      contextPath: /api
+    contextPath: /api

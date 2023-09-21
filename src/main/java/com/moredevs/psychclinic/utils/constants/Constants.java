@@ -1,4 +1,4 @@
-package com.moredevs.psychclinic.utils;
+package com.moredevs.psychclinic.utils.constants;
 
 public class Constants {
     public static final int PASSWORD_MIN_SIZE = 8;
