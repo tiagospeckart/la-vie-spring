@@ -9,8 +9,8 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
 ---
 ## Specification
 
-- [ ] Backend software developed using SpringBoot
-- [ ] Data persistence through Postgresql
+- [x] Backend software developed using SpringBoot
+- [x] Data persistence through Postgresql
 - [x] UML Class Diagram
 - [ ] Insomnia file with comprehensive API call examples
 - [ ] API documentation using Swagger
@@ -19,10 +19,10 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
   - [x] Non-Functional Requirements
   - [x] Business Rules
 - [ ] Minimum test coverage of 50%
-- [ ] Database migrations using Flyway
-- [ ] Build automation through Maven
-- [ ] Adherence to clean code principles
-- [ ] Data normalization process
+- [x] Database migrations using Flyway
+- [x] Build automation through Maven
+- [x] Adherence to clean code principles
+- [x] Data normalization process
 ---
 
 Documentation chapters will be organized as Wiki this [Repository Wiki](https://github.com/tiagospeckart/la-vie-spring/wiki) articles:
