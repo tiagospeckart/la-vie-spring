@@ -9,12 +9,12 @@ spring:
     properties:
       hibernate:
         default_schema: la-vie
+    schemas: la-vie
   flyway:
     schemas: la-vie
 
 server:
   error:
     include-message: always
-
   servlet:
     contextPath: /api

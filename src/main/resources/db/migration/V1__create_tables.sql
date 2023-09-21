@@ -1,3 +1,5 @@
+
+
 -- Create the Client table with columns from Person
 CREATE TABLE IF NOT EXISTS client (
     id SERIAL PRIMARY KEY,
