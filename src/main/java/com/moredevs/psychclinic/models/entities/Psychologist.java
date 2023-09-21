@@ -1,14 +1,18 @@
 package com.moredevs.psychclinic.models.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import com.moredevs.psychclinic.models.enums.Status;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.moredevs.psychclinic.utils.Constants.PASSWORD_MAX_SIZE;
@@ -19,10 +23,25 @@ import static com.moredevs.psychclinic.utils.Constants.PASSWORD_MIN_SIZE;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Builder
 @ToString(callSuper = true)
-public class Psychologist extends Person {
+public class Psychologist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Email
+    @NotNull
+    @Column(length = 40, nullable = false)
+    private String email;
+
+    @Column(length = 30)
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToMany(mappedBy = "psychologist")
     private List<Session> sessions;
@@ -40,4 +59,20 @@ public class Psychologist extends Person {
 
     @Size(max = 1000)
     private String biography;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @LastModifiedBy
+    @Column(nullable = false)
+    private String updatedBy;
 }

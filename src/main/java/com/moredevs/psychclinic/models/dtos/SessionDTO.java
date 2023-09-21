@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @ToString
 public class SessionDTO {
     private Integer id;
-    private Integer psychologistId;
-    private Integer clientId;
+    private PsychologistDTO psychologistDTO;
+    private ClientDTO clientDTO;
     private LocalDateTime dateAndTime;
     private String sessionNotes;
     private SessionStatus sessionStatus;
