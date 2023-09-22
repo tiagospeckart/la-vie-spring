@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
+
+    // TODO
     Optional<Admin> findAdminByEmail(String email);
 
+    // TODO
     @Query("SELECT a FROM Admin a where a.status = 'ACTIVE'")
     List<Admin> findAllActiveAdmins();
 }
