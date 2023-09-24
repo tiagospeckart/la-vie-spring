@@ -6,33 +6,34 @@ import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.service.SessionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public class SessionControllerImpl implements SessionController {
 
-    @Autowired
-    private SessionService sessionService;
-    @Autowired
-    private ModelMapper modelMapper;
-
     @Override
-    public SessionDTO findById(int id) {
+    public ResponseEntity<SessionDTO> findById(Integer id) {
         return null;
     }
 
     @Override
-    public List<SessionDTO> listAll() {
+    public ResponseEntity<SessionDTO> create(SessionDTO sessionDTO) {
         return null;
     }
 
     @Override
-    public void save(SessionDTO entity) throws NotFoundException {
-
+    public ResponseEntity<SessionDTO> updateById(Integer id, SessionDTO sessionDTO) {
+        return null;
     }
 
     @Override
-    public void delete(int id) {
+    public ResponseEntity<List<SessionDTO>> listAll() {
+        return null;
+    }
 
+    @Override
+    public ResponseEntity<Void> deleteById(Integer id) {
+        return null;
     }
 }

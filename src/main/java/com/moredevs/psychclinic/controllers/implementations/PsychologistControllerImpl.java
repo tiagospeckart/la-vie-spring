@@ -6,33 +6,34 @@ import com.moredevs.psychclinic.models.dtos.PsychologistDTO;
 import com.moredevs.psychclinic.service.PsychologistService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public class PsychologistControllerImpl implements PsychologistController {
 
-    @Autowired
-    private PsychologistService psychologistService;
-    @Autowired
-    private ModelMapper modelMapper;
-
     @Override
-    public PsychologistDTO findById(int id) {
+    public ResponseEntity<PsychologistDTO> findById(Integer id) {
         return null;
     }
 
     @Override
-    public List<PsychologistDTO> listAll() {
+    public ResponseEntity<PsychologistDTO> create(PsychologistDTO psychologistDTO) {
         return null;
     }
 
     @Override
-    public void save(PsychologistDTO entity) throws NotFoundException {
-
+    public ResponseEntity<PsychologistDTO> updateById(Integer id, PsychologistDTO psychologistDTO) {
+        return null;
     }
 
     @Override
-    public void delete(int id) {
+    public ResponseEntity<List<PsychologistDTO>> listAll() {
+        return null;
+    }
 
+    @Override
+    public ResponseEntity<Void> deleteById(Integer id) {
+        return null;
     }
 }

@@ -16,7 +16,8 @@ INSERT INTO admin (id, email, phone, status, created_at, created_by, updated_at,
 -- Populate the 'session' table with 4 records
 -- Two sessions for each client, each with a different psychologist
 INSERT INTO session (psychologist_id, client_id, date_and_time, session_notes, session_status, created_at, created_by, updated_at) VALUES
-(1, 1, '2023-10-10 10:00:00', 'Initial session with Client 1 and Psychologist 1', 'ACTIVE', NOW(), 'Flyway', NOW()),
-(2, 1, '2023-10-17 10:00:00', 'Second session with Client 1 and Psychologist 2', 'ACTIVE', NOW(), 'Flyway', NOW()),
-(1, 2, '2023-10-11 11:00:00', 'Initial session with Client 2 and Psychologist 1', 'ACTIVE', NOW(), 'Flyway', NOW()),
-(2, 2, '2023-10-18 11:00:00', 'Second session with Client 2 and Psychologist 2', 'ACTIVE', NOW(), 'Flyway', NOW());
+(1, 1, '2023-10-10 10:00:00', 'Initial session with Client 1 and Psychologist 1', 'COMPLETED', NOW(), 'Flyway', NOW()),
+(2, 1, '2023-10-17 10:00:00', 'Second session with Client 1 and Psychologist 2', 'COMPLETED', NOW(), 'Flyway', NOW()),
+(1, 2, '2023-10-11 11:00:00', 'Initial session with Client 2 and Psychologist 1', 'PLANNED', NOW(), 'Flyway', NOW()),
+(2, 2, '2023-10-18 11:00:00', 'Second session with Client 2 and Psychologist 2', 'CANCELLED', NOW(), 'Flyway', NOW());
+

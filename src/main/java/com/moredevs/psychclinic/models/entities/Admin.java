@@ -7,15 +7,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.LastModifiedDate;;
 
 import java.time.LocalDateTime;
 
-import static com.moredevs.psychclinic.utils.Constants.PASSWORD_MAX_SIZE;
-import static com.moredevs.psychclinic.utils.Constants.PASSWORD_MIN_SIZE;
+import static com.moredevs.psychclinic.utils.constants.Constants.PASSWORD_MAX_SIZE;
+import static com.moredevs.psychclinic.utils.constants.Constants.PASSWORD_MIN_SIZE;
 
 @Entity
 @Getter
@@ -39,25 +40,43 @@ public class Admin {
     private String phone;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "status_enum")
     private Status status;
+
+    @Column(nullable = false)
+    @NotBlank
+    @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE)
+    private String password;
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @CreatedBy
     @Column(updatable = false)
+    @CreatedBy
     private String createdBy;
 
-    @LastModifiedDate
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @LastModifiedBy
     @Column(nullable = false)
+    @LastModifiedBy
     private String updatedBy;
 
-    @NotBlank
-    @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE)
-    private String password;
+    // Lifecycle Callbacks
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+        this.createdBy = this.createdBy != null ? this.createdBy : "system";
+        this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+        this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+    }
 }

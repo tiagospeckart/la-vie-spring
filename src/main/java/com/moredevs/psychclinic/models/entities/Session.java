@@ -36,24 +36,39 @@ public class Session {
     @Column(columnDefinition = "text")
     private String sessionNotes;
 
-    @Column(columnDefinition = "varchar")
     @Enumerated(EnumType.STRING)
     private SessionStatus sessionStatus;
 
     @CreatedDate
-    @Column(columnDefinition = "timestamp", updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(updatable = false)
     @CreatedBy
-    @Column(columnDefinition = "varchar", updatable = false)
     private String createdBy;
 
+    @Column(nullable = false)
     @LastModifiedDate
-    @Column(columnDefinition = "timestamp", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false)
     @LastModifiedBy
-    @Column(columnDefinition = "varchar", nullable = false)
     private String updatedBy;
+
+    // Lifecycle Callbacks
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+        this.createdBy = this.createdBy != null ? this.createdBy : "system";
+        this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+        this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+    }
 
 }
