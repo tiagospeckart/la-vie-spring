@@ -10,8 +10,6 @@ public interface Controller<T> {
     // Returns the resource by ID with its metadata
     ResponseEntity<T> findById(Integer id);
 
-    // Creates the resource and returns 201 Created along with Location header
-    ResponseEntity<T> create(T t);
     // Update resource by ID and return 200 OK or appropriate status code
     ResponseEntity<T> updateById(Integer id, T t);
 

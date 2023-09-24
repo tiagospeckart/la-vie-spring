@@ -22,12 +22,12 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "psychologist_id")
+    @ManyToOne
+    @JoinColumn(name = "psychologist_id", updatable = false)
     private Psychologist psychologist;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @ManyToOne
+    @JoinColumn(name = "client_id", updatable = false)
     private Client client;
 
     @Column(columnDefinition = "timestamp")
