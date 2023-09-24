@@ -36,7 +36,6 @@ public class Session {
     @Column(columnDefinition = "text")
     private String sessionNotes;
 
-    @Column(columnDefinition = "session_status")
     @Enumerated(EnumType.STRING)
     private SessionStatus sessionStatus;
 

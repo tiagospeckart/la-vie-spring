@@ -41,10 +41,9 @@ public class Psychologist {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "status_enum")
     private Status status;
 
-    @OneToMany(mappedBy = "psychologist")
+    @OneToMany(mappedBy = "psychologist", fetch = FetchType.EAGER)
     private List<Session> sessions;
 
     @NotBlank

@@ -15,7 +15,10 @@ public class ErrorConstants {
 
     public static class Client {
         public static final String CLIENT_INSERTION_ERROR = "Error on inserting Client";
+        public static final String CLIENT_NULL_ID = "Null Client ID";
+        public static final String CLIENT_UPDATE_ERROR = "Error on updating Client";
 
+        public static final String CLIENT_ID_NOT_FOUND = "Client id was not found";
     }
 
     public static class Session {

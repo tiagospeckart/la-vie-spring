@@ -1,18 +1,24 @@
 package com.moredevs.psychclinic.service.impl;
 
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
+import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.models.entities.Client;
-import com.moredevs.psychclinic.repository.AdminRepository;
-import com.moredevs.psychclinic.repository.ClientRepository;
+import com.moredevs.psychclinic.models.entities.Session;
+import com.moredevs.psychclinic.repositories.ClientRepository;
 import com.moredevs.psychclinic.service.ClientService;
+import com.moredevs.psychclinic.utils.EntityUtils;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Client.*;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -36,15 +42,16 @@ public class ClientServiceImpl implements ClientService {
             Client createdClient = clientRepository.save(client);
             return mapper.map(createdClient, ClientDTO.class);
         } catch (Exception e) {
-            logger.error("An error occurred while inserting Client", e);
-            throw new RuntimeException("CLIENT_INSERTION_ERROR");
+            logger.error(CLIENT_INSERTION_ERROR, e);
+            throw new RuntimeException(CLIENT_INSERTION_ERROR);
         }
     }
 
     @Override
+    @Transactional
     public ClientDTO update(ClientDTO clientDTO) {
         if (clientDTO.getId() == null) {
-            throw new RuntimeException("CLIENT_EMPTY_ID");
+            throw new RuntimeException(CLIENT_NULL_ID);
         }
 
         Optional<Client> oClient = clientRepository.findById(clientDTO.getId());
@@ -52,7 +59,6 @@ public class ClientServiceImpl implements ClientService {
         if (oClient.isPresent()) {
             Client existingClient = oClient.get();
 
-            // Field-level update and validation
             if (clientDTO.getAddress() != null && !clientDTO.getAddress().isEmpty()) {
                 existingClient.setAddress(clientDTO.getAddress());
             }
@@ -77,19 +83,31 @@ public class ClientServiceImpl implements ClientService {
                 existingClient.setObservations(clientDTO.getObservations());
             }
 
+            List<Session> mergedSessions = null;
             if (clientDTO.getSessions() != null && !clientDTO.getSessions().isEmpty()) {
-                existingClient.setSessions(clientDTO.getSessions()); // Assume you have setters for this or use a more complex merging strategy
+                mergedSessions = EntityUtils.mergeAndUpdateSessions(
+                        existingClient.getSessions(),
+                        clientDTO.getSessions(),
+                        SessionDTO::getId,
+                        Session::getId
+                );
+                existingClient.setSessions(mergedSessions);
             }
 
             if (clientDTO.getUpdatedBy() != null && !clientDTO.getUpdatedBy().isEmpty()) {
                 existingClient.setUpdatedBy(clientDTO.getUpdatedBy());
             }
-
-            // Update the updatedAt field
             existingClient.setUpdatedAt(LocalDateTime.now());
 
+            try {
+                Client updatedClient = clientRepository.save(existingClient);
+                return mapper.map(updatedClient, ClientDTO.class);
+            } catch (Exception e) {
+                logger.error(CLIENT_UPDATE_ERROR, e);
+                throw new RuntimeException(CLIENT_UPDATE_ERROR);
+            }
         } else {
-            throw new RuntimeException("CLIENT_ID_NOT_FOUND");
+            throw new RuntimeException(CLIENT_ID_NOT_FOUND);
         }
     }
 

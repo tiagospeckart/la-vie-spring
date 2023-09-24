@@ -40,7 +40,6 @@ public class Client {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "status_enum")
     private Status status;
 
     @NotNull
@@ -52,7 +51,7 @@ public class Client {
 
     private String observations;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Session> sessions;
 
     @CreatedDate
@@ -79,6 +78,9 @@ public class Client {
         this.updatedAt = now;
         this.createdBy = this.createdBy != null ? this.createdBy : "system";
         this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+        if (status == null) {
+            status = Status.ACTIVE;
+        }
     }
 
     @PreUpdate

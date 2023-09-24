@@ -1,9 +1,8 @@
-package com.moredevs.psychclinic.repository;
+package com.moredevs.psychclinic.repositories;
 
 import com.moredevs.psychclinic.models.entities.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;

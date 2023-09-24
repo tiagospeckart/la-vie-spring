@@ -2,7 +2,7 @@ package com.moredevs.psychclinic.service.impl;
 
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
 import com.moredevs.psychclinic.models.entities.Admin;
-import com.moredevs.psychclinic.repository.AdminRepository;
+import com.moredevs.psychclinic.repositories.AdminRepository;
 import com.moredevs.psychclinic.service.AdminService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;

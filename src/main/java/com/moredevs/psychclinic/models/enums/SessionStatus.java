@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum SessionStatus {
 
-    COMPLETED("ACTIVE"),
-    PLANNED("INACTIVE"),
+    COMPLETED("COMPLETED"),
+    PLANNED("PLANNED"),
     CANCELLED("CANCELLED");
 
     private String description = "";
