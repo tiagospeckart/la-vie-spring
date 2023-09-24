@@ -1,0 +1,23 @@
+_id: req_eb9a569206c14d5b9d2b2b6d643c3c81
+type: Request
+parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
+modified: 1695513788114
+created: 1695513780070
+url: "{{ _.base_url }}{{ _.base_route }}"
+name: ListAllClients
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841548
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

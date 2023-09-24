@@ -1,0 +1,39 @@
+_id: req_dc0d3bdcb8e8477a93812a179f58c063
+type: Request
+parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
+modified: 1695515403750
+created: 1695513780075
+url: "{{ _.base_url }}{{ _.base_route }}"
+name: CreateClient
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"address": "Rua Sâo Paulo",
+    	"phone": "9999-7899",
+    	"email": "client3@email.com",
+    	"dateOfBirth": "1980-05-25",
+    	"observations": "Client 3 details",
+    	"status": "ACTIVE"
+    }
+parameters:
+  - id: pair_1e81fe596f254e90bfe1829627083edb
+    name: ""
+    value: ""
+    description: ""
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841448
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

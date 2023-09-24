@@ -1,0 +1,27 @@
+_id: req_c4ac4788250a48fab3a899e5d9a05cfe
+type: Request
+parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
+modified: 1695513794913
+created: 1695513780072
+url: "{{ _.base_url }}{{ _.base_route }}/1"
+name: GetOneClient
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_1e81fe596f254e90bfe1829627083edb
+    name: ""
+    value: ""
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841498
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
