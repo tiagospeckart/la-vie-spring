@@ -1,4 +1,6 @@
 package com.moredevs.psychclinic.service;
 
-public interface PsychologistService {
+import com.moredevs.psychclinic.models.dtos.PsychologistDTO;
+
+public interface PsychologistService extends Service<PsychologistDTO> {
 }
