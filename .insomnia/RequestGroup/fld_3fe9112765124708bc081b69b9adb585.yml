@@ -1,13 +1,23 @@
 _id: fld_3fe9112765124708bc081b69b9adb585
 type: RequestGroup
 parentId: wrk_37e989fcbd854b81aada12a58220fe0b
-modified: 1695597442086
+modified: 1695604296786
 created: 1695597427767
 name: Session
 description: ""
 environment:
   base_route: /session
+  client: client
+  psychologist: psychologist
+  complete: complete
+  reschedule: reschedule
+  cancel: cancel
 environmentPropertyOrder:
   "&":
     - base_route
+    - client
+    - psychologist
+    - complete
+    - reschedule
+    - cancel
 metaSortKey: -1695298837178

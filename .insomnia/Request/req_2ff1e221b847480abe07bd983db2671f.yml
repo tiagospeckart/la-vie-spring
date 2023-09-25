@@ -1,0 +1,23 @@
+_id: req_2ff1e221b847480abe07bd983db2671f
+type: Request
+parentId: fld_3fe9112765124708bc081b69b9adb585
+modified: 1695604309185
+created: 1695604269553
+url: "{{ _.base_url }}{{ _.base_route }}/{{ _.client }}/2/{{ _.psychologist }}/2"
+name: ListAllSessionsByClientAndPsychologist
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841504.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,22 +1,15 @@
-_id: req_bba83860f7ee4494ad92a8aaa667e197
+_id: req_2966b9d9a71743a6977267d01e3083d4
 type: Request
 parentId: fld_3fe9112765124708bc081b69b9adb585
-modified: 1695604031538
-created: 1695597427772
-url: "{{ _.base_url }}{{ _.base_route }}"
-name: CreateSession
+modified: 1695604039298
+created: 1695603685968
+url: "{{ _.base_url }}{{ _.base_route }}/9/{{ _.reschedule }}"
+name: RescheduleSession
 description: ""
-method: POST
+method: PUT
 body:
   mimeType: application/json
-  text: |
-    {
-        "psychologistId": 1,
-        "clientId": 2,
-        "dateAndTime": "2023-10-10T10:00:00",
-        "sessionNotes": "Second session with Client 1 and Psychologist 1",
-        "sessionStatus": "PLANNED"
-    }
+  text: '"2023-12-25T14:30:00"'
 parameters:
   - id: pair_1e81fe596f254e90bfe1829627083edb
     name: ""
@@ -28,7 +21,7 @@ headers:
   - name: User-Agent
     value: Insomnia/2023.5.7
 authentication: {}
-metaSortKey: -1695298841448
+metaSortKey: -1695298841404.25
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true
