@@ -24,6 +24,8 @@ public class ErrorConstants {
 
     public static class Session {
         public static final String SESSION_INSERTION_ERROR = "Error on inserting Session";
-
+        public static final String SESSION_NULL_ID = "Null Session ID";
+        public static final String SESSION_UPDATE_ERROR = "Error on updating Session";
+        public static final String SESSION_ID_NOT_FOUND = "Session Id was not found";
     }
 }
