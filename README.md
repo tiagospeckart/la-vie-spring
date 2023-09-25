@@ -12,7 +12,7 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
 - [x] Backend software developed using SpringBoot
 - [x] Data persistence through Postgresql
 - [x] UML Class Diagram
-- [ ] Insomnia file with comprehensive API call examples
+- [x] Insomnia file with comprehensive API call examples
 - [ ] API documentation using Swagger
 - [x] Requisite List
   - [x] Functional Requirements
