@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -65,5 +66,52 @@ public class SessionControllerImpl implements SessionController {
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         sessionService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<Boolean> completeSessionById(@PathVariable Integer id) {
+        boolean isCompleted = sessionService.completeSessionById(id);
+        return ResponseEntity.ok(isCompleted);
+    }
+
+    @Override
+    @PutMapping("/{id}/reschedule")
+    public ResponseEntity<SessionDTO> rescheduleSessionById(@PathVariable Integer id,
+                                                            @RequestBody LocalDateTime newDateTime) {
+        SessionDTO rescheduledSession = sessionService.rescheduleSessionById(id, newDateTime);
+        if (rescheduledSession == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(rescheduledSession);
+    }
+
+    @Override
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<Boolean> cancelSessionById(@PathVariable Integer id) {
+        boolean isCanceled = sessionService.cancelSessionById(id);
+        return ResponseEntity.ok(isCanceled);
+    }
+
+    @Override
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<SessionDTO>> listClientSessionsById(@PathVariable Integer clientId) {
+        List<SessionDTO> clientSessions = sessionService.listClientSessionsById(clientId);
+        return ResponseEntity.ok(clientSessions);
+    }
+
+    @Override
+    @GetMapping("/psychologist/{psychologistId}")
+    public ResponseEntity<List<SessionDTO>> listPsychologistSessionsById(@PathVariable Integer psychologistId) {
+        List<SessionDTO> psychologistSessions = sessionService.listPsychologistSessionsById(psychologistId);
+        return ResponseEntity.ok(psychologistSessions);
+    }
+
+    @Override
+    @GetMapping("/client/{clientId}/psychologist/{psychologistId}")
+    public ResponseEntity<List<SessionDTO>> listClientPsychologistSessionsById(@PathVariable Integer clientId,
+                                                                               @PathVariable Integer psychologistId) {
+        List<SessionDTO> sessions = sessionService.listClientPsychologistSessionsById(clientId, psychologistId);
+        return ResponseEntity.ok(sessions);
     }
 }

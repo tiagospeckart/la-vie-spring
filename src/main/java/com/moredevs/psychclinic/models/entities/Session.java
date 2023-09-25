@@ -59,6 +59,7 @@ public class Session {
     @PrePersist
     public void prePersist() {
         LocalDateTime now = LocalDateTime.now();
+        this.sessionStatus = this.sessionStatus != null ? this.sessionStatus : SessionStatus.valueOf("PLANNED");
         this.createdAt = now;
         this.updatedAt = now;
         this.createdBy = this.createdBy != null ? this.createdBy : "system";
