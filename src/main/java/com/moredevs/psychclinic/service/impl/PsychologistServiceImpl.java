@@ -7,18 +7,17 @@ import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.PsychologistRepository;
 import com.moredevs.psychclinic.service.PsychologistService;
 import com.moredevs.psychclinic.utils.EntityUtils;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Client.CLIENT_INSERTION_ERROR;
 import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Psychologist.*;
 
 @Service

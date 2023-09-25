@@ -4,7 +4,6 @@ import com.moredevs.psychclinic.models.dtos.SessionCreateDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;

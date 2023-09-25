@@ -1,10 +1,8 @@
 package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.ClientController;
-import com.moredevs.psychclinic.exceptions.NotFoundException;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
 import com.moredevs.psychclinic.service.ClientService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

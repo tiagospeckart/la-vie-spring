@@ -1,6 +1,5 @@
 package com.moredevs.psychclinic.controllers;
 
-import com.moredevs.psychclinic.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
