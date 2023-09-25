@@ -18,3 +18,8 @@ server:
     include-message: always
   servlet:
     contextPath: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  version: 0.0.1
