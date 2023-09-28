@@ -7,8 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import com.moredevs.psychclinic.exceptions.NotFoundException;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
 import com.moredevs.psychclinic.service.AdminService;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,10 +55,10 @@ public class AdminControllerImplTest {
 
     @Test
     void testUpdateById() throws Exception {
-        AdminDTO existingAdmin = new AdminDTO();  // Initialize your AdminDTO
+        AdminDTO existingAdmin = new AdminDTO();
         when(adminService.findById(any())).thenReturn(existingAdmin);
 
-        AdminDTO updatedAdmin = new AdminDTO();  // Initialize your updated AdminDTO
+        AdminDTO updatedAdmin = new AdminDTO();
         when(adminService.update(any())).thenReturn(updatedAdmin);
 
         mockMvc.perform(put("/admin/1")
@@ -86,6 +88,54 @@ public class AdminControllerImplTest {
         mockMvc.perform(get("/admin"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(allAdmins)));
+
+        verify(adminService, times(1)).listAll();
+    }
+    @Test
+    void testFindById_NotFound() throws Exception {
+        when(adminService.findById(any())).thenReturn(null);
+
+        mockMvc.perform(get("/admin/1"))
+                .andExpect(status().isNotFound());
+
+        verify(adminService, times(1)).findById(any());
+    }
+
+    @Test
+    void testUpdateById_NotFound() throws Exception {
+        when(adminService.findById(any())).thenReturn(null);
+
+        AdminDTO updatedAdmin = new AdminDTO();  // Initialize your updated AdminDTO
+
+        mockMvc.perform(put("/admin/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(updatedAdmin)))
+                .andExpect(status().isNotFound());
+
+        verify(adminService, times(1)).findById(any());
+    }
+
+    @Test
+    void testUpdateById_BadRequest() throws Exception {
+        AdminDTO existingAdmin = new AdminDTO();
+
+        AdminDTO updatedAdmin = null;
+
+        mockMvc.perform(put("/admin/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(null)))
+                .andExpect(status().isBadRequest());
+
+        verify(adminService, times(0)).update(any());
+    }
+
+    @Test
+    void testListAll_EmptyList() throws Exception {
+        when(adminService.listAll()).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/admin"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]"));
 
         verify(adminService, times(1)).listAll();
     }

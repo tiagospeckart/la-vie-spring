@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -68,6 +69,10 @@ public class AdminControllerImpl implements AdminController {
             })
     @Override
     public ResponseEntity<AdminDTO> updateById(@PathVariable Integer id, @RequestBody AdminDTO updatedAdmin) {
+        if (updatedAdmin == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         AdminDTO existingAdmin = adminService.findById(id);
 
         if (existingAdmin == null) {
@@ -89,6 +94,9 @@ public class AdminControllerImpl implements AdminController {
     public ResponseEntity<List<AdminDTO>> listAll() {
         List<AdminDTO> allItems = adminService.listAll();
         HttpHeaders headers = new HttpHeaders();
+        if (allItems == null) {
+            allItems = Collections.emptyList();
+        }
         headers.add("X-Total-Count", String.valueOf(allItems.size()));
         return ResponseEntity.ok().headers(headers).body(allItems);
     }
