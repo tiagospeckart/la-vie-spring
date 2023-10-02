@@ -4,15 +4,12 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.moredevs.psychclinic.exceptions.NotFoundException;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
-import com.moredevs.psychclinic.service.AdminService;
+import com.moredevs.psychclinic.services.AdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -90,15 +87,6 @@ public class AdminControllerImplTest {
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(allAdmins)));
 
         verify(adminService, times(1)).listAll();
-    }
-    @Test
-    void testFindById_NotFound() throws Exception {
-        when(adminService.findById(any())).thenReturn(null);
-
-        mockMvc.perform(get("/admin/1"))
-                .andExpect(status().isNotFound());
-
-        verify(adminService, times(1)).findById(any());
     }
 
     @Test

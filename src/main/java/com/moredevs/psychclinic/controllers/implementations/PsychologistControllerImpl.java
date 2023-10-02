@@ -2,7 +2,7 @@ package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.PsychologistController;
 import com.moredevs.psychclinic.models.dtos.PsychologistDTO;
-import com.moredevs.psychclinic.service.PsychologistService;
+import com.moredevs.psychclinic.services.PsychologistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

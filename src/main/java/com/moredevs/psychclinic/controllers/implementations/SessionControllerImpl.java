@@ -3,7 +3,7 @@ package com.moredevs.psychclinic.controllers.implementations;
 import com.moredevs.psychclinic.controllers.SessionController;
 import com.moredevs.psychclinic.models.dtos.SessionCreateDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
-import com.moredevs.psychclinic.service.SessionService;
+import com.moredevs.psychclinic.services.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

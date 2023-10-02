@@ -2,7 +2,7 @@ package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.ClientController;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
-import com.moredevs.psychclinic.service.ClientService;
+import com.moredevs.psychclinic.services.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

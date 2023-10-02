@@ -1,4 +1,4 @@
-package com.moredevs.psychclinic.service.impl;
+package com.moredevs.psychclinic.services.impl;
 
 import com.moredevs.psychclinic.exceptions.ResourceNotFoundException;
 import com.moredevs.psychclinic.models.dtos.SessionCreateDTO;
@@ -10,7 +10,7 @@ import com.moredevs.psychclinic.models.enums.SessionStatus;
 import com.moredevs.psychclinic.repositories.ClientRepository;
 import com.moredevs.psychclinic.repositories.PsychologistRepository;
 import com.moredevs.psychclinic.repositories.SessionRepository;
-import com.moredevs.psychclinic.service.SessionService;
+import com.moredevs.psychclinic.services.SessionService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;

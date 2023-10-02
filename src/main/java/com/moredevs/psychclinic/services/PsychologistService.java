@@ -1,4 +1,4 @@
-package com.moredevs.psychclinic.service;
+package com.moredevs.psychclinic.services;
 
 import com.moredevs.psychclinic.models.dtos.PsychologistDTO;
 

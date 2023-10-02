@@ -1,11 +1,11 @@
-package com.moredevs.psychclinic.service.impl;
+package com.moredevs.psychclinic.services.impl;
 
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.models.entities.Client;
 import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.ClientRepository;
-import com.moredevs.psychclinic.service.ClientService;
+import com.moredevs.psychclinic.services.ClientService;
 import com.moredevs.psychclinic.utils.EntityUtils;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;

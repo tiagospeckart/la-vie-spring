@@ -3,7 +3,7 @@ package com.moredevs.psychclinic.controllers.implementations;
 import com.moredevs.psychclinic.controllers.AdminController;
 import com.moredevs.psychclinic.exceptions.NotFoundException;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
-import com.moredevs.psychclinic.service.AdminService;
+import com.moredevs.psychclinic.services.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,4 +1,4 @@
-package com.moredevs.psychclinic.service;
+package com.moredevs.psychclinic.services;
 
 import java.util.List;
 
