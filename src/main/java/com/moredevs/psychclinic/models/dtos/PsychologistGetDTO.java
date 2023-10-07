@@ -4,6 +4,7 @@ import com.moredevs.psychclinic.models.enums.Status;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,10 +12,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class AdminDTO extends BaseAuditDTO{
+public class PsychologistGetDTO extends BaseAuditDTO {
     private Integer id;
     private String email;
     private String password;
     private String phone;
+    private String licenseNumber;
+    private String specializationArea;
+    private String biography;
     private Status status;
+    private List<SessionInPsychologistListDTO> sessions;
 }

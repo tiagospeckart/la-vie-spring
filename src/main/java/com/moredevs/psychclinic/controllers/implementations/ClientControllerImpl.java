@@ -1,7 +1,9 @@
 package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.ClientController;
+import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
+import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
 import com.moredevs.psychclinic.services.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,12 +36,12 @@ public class ClientControllerImpl implements ClientController {
                     @ApiResponse(responseCode = "404", description = "Client not found")
             })
     @Override
-    public ResponseEntity<ClientDTO> findById(@Parameter(description = "ID of client to be searched") @PathVariable Integer id) {
-        ClientDTO clientDTO = clientService.findById(id);
-        if (clientDTO == null) {
+    public ResponseEntity<ClientGetDTO> findById(@Parameter(description = "ID of client to be searched") @PathVariable Integer id) {
+        ClientGetDTO clientGetDTO = clientService.findById(id);
+        if (clientGetDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(clientDTO);
+        return ResponseEntity.ok(clientGetDTO);
     }
 
     @PostMapping
@@ -49,8 +51,8 @@ public class ClientControllerImpl implements ClientController {
                     @ApiResponse(responseCode = "400", description = "Invalid input")
             })
     @Override
-    public ResponseEntity<ClientDTO> create(@Parameter(description = "Client to add") @RequestBody ClientDTO clientDTO) {
-        ClientDTO createdClient = clientService.create(clientDTO);
+    public ResponseEntity<ClientDTO> create(@Parameter(description = "Client to add") @RequestBody ClientCreateDTO clientCreateDTO) {
+        ClientDTO createdClient = clientService.create(clientCreateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdClient.getId())
@@ -67,7 +69,7 @@ public class ClientControllerImpl implements ClientController {
             })
     @Override
     public ResponseEntity<ClientDTO> updateById(@Parameter(description = "ID of client to be updated") @PathVariable Integer id,
-                                                @Parameter(description = "Updated client") @RequestBody ClientDTO updatedClient) {
+                                                @org.jetbrains.annotations.NotNull @Parameter(description = "Updated client") @RequestBody ClientDTO updatedClient) {
         updatedClient.setId(id);
         ClientDTO savedClient = clientService.update(updatedClient);
         if (savedClient == null) {
@@ -82,8 +84,8 @@ public class ClientControllerImpl implements ClientController {
                     @ApiResponse(responseCode = "200", description = "Successful operation")
             })
     @Override
-    public ResponseEntity<List<ClientDTO>> listAll() {
-        List<ClientDTO> allClients = clientService.listAll();
+    public ResponseEntity<List<ClientGetDTO>> listAll() {
+        List<ClientGetDTO> allClients = clientService.listAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", String.valueOf(allClients.size()));
         return ResponseEntity.ok().headers(headers).body(allClients);

@@ -12,14 +12,3 @@ spring:
     schemas: la-vie
   flyway:
     schemas: la-vie
-
-server:
-  error:
-    include-message: always
-  servlet:
-    contextPath: /api
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui
-  version: 0.0.1

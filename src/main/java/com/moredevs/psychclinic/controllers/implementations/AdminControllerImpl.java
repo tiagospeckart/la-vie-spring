@@ -2,7 +2,9 @@ package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.AdminController;
 import com.moredevs.psychclinic.exceptions.NotFoundException;
+import com.moredevs.psychclinic.models.dtos.AdminCreateDTO;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
+import com.moredevs.psychclinic.models.dtos.AdminGetDTO;
 import com.moredevs.psychclinic.services.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,12 +38,12 @@ public class AdminControllerImpl implements AdminController {
             })
     @GetMapping(value = "/{id}")
     @Override
-    public ResponseEntity<AdminDTO> findById(@PathVariable Integer id) {
-        AdminDTO adminDTO = adminService.findById(id);
-        if (adminDTO == null){
+    public ResponseEntity<AdminGetDTO> findById(@PathVariable Integer id) {
+        AdminGetDTO adminGetDTO = adminService.findById(id);
+        if (adminGetDTO == null){
             throw new NotFoundException();
         }
-        return ResponseEntity.ok(adminDTO);
+        return ResponseEntity.ok(adminGetDTO);
     }
 
     @PostMapping
@@ -51,8 +53,8 @@ public class AdminControllerImpl implements AdminController {
                     @ApiResponse(responseCode = "400", description = "Invalid input")
             })
     @Override
-    public ResponseEntity<AdminDTO> create(@Valid @RequestBody AdminDTO adminDTO) {
-        AdminDTO createdAdmin = adminService.create(adminDTO);
+    public ResponseEntity<AdminDTO> create(@Valid @RequestBody AdminCreateDTO adminCreateDTO) {
+        AdminDTO createdAdmin = adminService.create(adminCreateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdAdmin.getId())
@@ -73,7 +75,7 @@ public class AdminControllerImpl implements AdminController {
             return ResponseEntity.badRequest().build();
         }
 
-        AdminDTO existingAdmin = adminService.findById(id);
+        AdminGetDTO existingAdmin = adminService.findById(id);
 
         if (existingAdmin == null) {
             return ResponseEntity.notFound().build();
@@ -91,8 +93,8 @@ public class AdminControllerImpl implements AdminController {
                     @ApiResponse(responseCode = "200", description = "Successful operation")
             })
     @Override
-    public ResponseEntity<List<AdminDTO>> listAll() {
-        List<AdminDTO> allItems = adminService.listAll();
+    public ResponseEntity<List<AdminGetDTO>> listAll() {
+        List<AdminGetDTO> allItems = adminService.listAll();
         HttpHeaders headers = new HttpHeaders();
         if (allItems == null) {
             allItems = Collections.emptyList();

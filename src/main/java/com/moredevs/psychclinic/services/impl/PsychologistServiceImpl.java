@@ -1,11 +1,12 @@
 package com.moredevs.psychclinic.services.impl;
 
-import com.moredevs.psychclinic.models.dtos.PsychologistDTO;
-import com.moredevs.psychclinic.models.dtos.SessionDTO;
+import com.moredevs.psychclinic.models.dtos.*;
 import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.PsychologistRepository;
+import com.moredevs.psychclinic.repositories.SessionRepository;
 import com.moredevs.psychclinic.services.PsychologistService;
+import com.moredevs.psychclinic.services.SessionService;
 import com.moredevs.psychclinic.utils.EntityUtils;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -15,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Psychologist.*;
 
@@ -29,17 +32,20 @@ public class PsychologistServiceImpl implements PsychologistService {
     PsychologistRepository psychologistRepository;
 
     @Autowired
+    SessionService sessionService;
+
+    @Autowired
     ModelMapper mapper;
 
     @Override
-    public PsychologistDTO create(PsychologistDTO psychologistDTO) {
-        return save(psychologistDTO);
+    public PsychologistDTO create(PsychologistCreateDTO psychologistCreateDTO) {
+        return save(psychologistCreateDTO);
     }
 
     @Override
-    public PsychologistDTO save(PsychologistDTO psychologistDTO) {
+    public PsychologistDTO save(PsychologistCreateDTO psychologistCreateDTO) {
         try {
-            Psychologist psychologist = mapper.map(psychologistDTO, Psychologist.class);
+            Psychologist psychologist = mapper.map(psychologistCreateDTO, Psychologist.class);
             Psychologist createdPsychologist = psychologistRepository.save(psychologist);
             return mapper.map(createdPsychologist, PsychologistDTO.class);
         } catch (Exception e) {
@@ -114,15 +120,21 @@ public class PsychologistServiceImpl implements PsychologistService {
     }
 
     @Override
-    public PsychologistDTO findById(Integer id) {
+    public PsychologistGetDTO findById(Integer id) {
         Optional<Psychologist> oPsychologist = psychologistRepository.findById(id);
-        return oPsychologist.map(psychologist -> mapper.map(psychologist, PsychologistDTO.class)).orElse(null);
+        return oPsychologist.map(psychologist -> mapper.map(psychologist, PsychologistGetDTO.class)).orElse(null);
     }
 
     @Override
-    public List<PsychologistDTO> listAll() {
+    public List<PsychologistGetDTO> listAll() {
         return psychologistRepository.findAll().stream()
-                .map(psychologist -> mapper.map(psychologist, PsychologistDTO.class)).toList();
+                .map(psychologist -> mapper.map(psychologist, PsychologistGetDTO.class))
+                .peek(psychologistDTO -> {
+                    Integer id = psychologistDTO.getId();
+                    List<SessionInPsychologistListDTO> sessions = sessionService.findSessionsByPsychologistId(id);
+                    psychologistDTO.setSessions(sessions);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

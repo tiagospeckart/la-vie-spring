@@ -1,7 +1,9 @@
 package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.PsychologistController;
+import com.moredevs.psychclinic.models.dtos.PsychologistCreateDTO;
 import com.moredevs.psychclinic.models.dtos.PsychologistDTO;
+import com.moredevs.psychclinic.models.dtos.PsychologistGetDTO;
 import com.moredevs.psychclinic.services.PsychologistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,12 +36,12 @@ public class PsychologistControllerImpl implements PsychologistController {
                     @ApiResponse(responseCode = "404", description = "Psychologist not found")
             })
     @Override
-    public ResponseEntity<PsychologistDTO> findById(@Parameter(description = "ID of psychologist to be searched") @PathVariable Integer id) {
-        PsychologistDTO psychologistDTO = psychologistService.findById(id);
-        if (psychologistDTO == null) {
+    public ResponseEntity<PsychologistGetDTO> findById(@Parameter(description = "ID of psychologist to be searched") @PathVariable Integer id) {
+        PsychologistGetDTO psychologistGetDTO = psychologistService.findById(id);
+        if (psychologistGetDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(psychologistDTO);
+        return ResponseEntity.ok(psychologistGetDTO);
     }
 
     @PostMapping
@@ -49,8 +51,8 @@ public class PsychologistControllerImpl implements PsychologistController {
                     @ApiResponse(responseCode = "400", description = "Invalid input")
             })
     @Override
-    public ResponseEntity<PsychologistDTO> create(@Parameter(description = "Psychologist to add") @RequestBody PsychologistDTO psychologistDTO) {
-        PsychologistDTO createdPsychologist = psychologistService.create(psychologistDTO);
+    public ResponseEntity<PsychologistDTO> create(@Parameter(description = "Psychologist to add") @RequestBody PsychologistCreateDTO psychologistCreateDTO) {
+        PsychologistDTO createdPsychologist = psychologistService.create(psychologistCreateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdPsychologist.getId())
@@ -82,8 +84,8 @@ public class PsychologistControllerImpl implements PsychologistController {
                     @ApiResponse(responseCode = "200", description = "Successful operation")
             })
     @Override
-    public ResponseEntity<List<PsychologistDTO>> listAll() {
-        List<PsychologistDTO> allPsychologists = psychologistService.listAll();
+    public ResponseEntity<List<PsychologistGetDTO>> listAll() {
+        List<PsychologistGetDTO> allPsychologists = psychologistService.listAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", String.valueOf(allPsychologists.size()));
         return ResponseEntity.ok().headers(headers).body(allPsychologists);

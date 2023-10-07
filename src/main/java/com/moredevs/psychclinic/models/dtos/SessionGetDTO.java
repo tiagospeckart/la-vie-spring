@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SessionDTO extends BaseAuditDTO {
+public class SessionGetDTO extends BaseAuditDTO {
     private Integer id;
-    private PsychologistDTO psychologistDTO;
-    private ClientDTO clientDTO;
+    private String psychologistName;
+    private String clientName;
     private LocalDateTime dateAndTime;
     private String sessionNotes;
     private SessionStatus sessionStatus;

@@ -3,6 +3,8 @@ package com.moredevs.psychclinic.services.impl;
 import com.moredevs.psychclinic.exceptions.ResourceNotFoundException;
 import com.moredevs.psychclinic.models.dtos.SessionCreateDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
+import com.moredevs.psychclinic.models.dtos.SessionGetDTO;
+import com.moredevs.psychclinic.models.dtos.SessionInPsychologistListDTO;
 import com.moredevs.psychclinic.models.entities.Client;
 import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
@@ -10,12 +12,14 @@ import com.moredevs.psychclinic.models.enums.SessionStatus;
 import com.moredevs.psychclinic.repositories.ClientRepository;
 import com.moredevs.psychclinic.repositories.PsychologistRepository;
 import com.moredevs.psychclinic.repositories.SessionRepository;
+import com.moredevs.psychclinic.repositories.specs.SessionSpecifications;
 import com.moredevs.psychclinic.services.SessionService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -74,7 +78,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean completeSessionById(Integer sessionId) {
         try {
-            Session session = sessionRepository.findById(sessionId)
+            Session session = sessionRepository.findById(Long.valueOf(sessionId))
                     .orElseThrow(() -> new ResourceNotFoundException("Session with ID " + sessionId + " not found"));
             session.setSessionStatus(SessionStatus.COMPLETED);
             sessionRepository.save(session);
@@ -87,7 +91,7 @@ public class SessionServiceImpl implements SessionService {
 
     public SessionDTO rescheduleSessionById(Integer sessionId, LocalDateTime newDateTime) {
         try {
-            Session session = sessionRepository.findById(sessionId)
+            Session session = sessionRepository.findById(Long.valueOf(sessionId))
                     .orElseThrow(() -> new ResourceNotFoundException("Session with ID " + sessionId + " not found"));
 
             // TODO -> refactor into it's own function
@@ -112,7 +116,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean cancelSessionById(Integer sessionId) {
         try {
-            Session session = sessionRepository.findById(sessionId)
+            Session session = sessionRepository.findById(Long.valueOf(sessionId))
                     .orElseThrow(() -> new ResourceNotFoundException("Session with ID " + sessionId + " not found"));
             session.setSessionStatus(SessionStatus.CANCELLED);
             sessionRepository.save(session);
@@ -128,28 +132,28 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     @Transactional
-    public List<SessionDTO> listClientSessionsById(Integer clientId) {
-        List<Session> sessions = sessionRepository.findByClientId(clientId);
+    public List<SessionGetDTO> listClientSessionsById(Integer clientId) {
+        List<Session> sessions = sessionRepository.findAllByClientId(clientId);
         return sessions.stream()
-                .map(session -> mapper.map(session, SessionDTO.class))
+                .map(session -> mapper.map(session, SessionGetDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<SessionDTO> listPsychologistSessionsById(Integer psychologistId) {
-        List<Session> sessions = sessionRepository.findByPsychologistId(psychologistId);
+    public List<SessionGetDTO> listPsychologistSessionsById(Integer psychologistId) {
+        List<Session> sessions = sessionRepository.findAllByPsychologistId(psychologistId);
         return sessions.stream()
-                .map(session -> mapper.map(session, SessionDTO.class))
+                .map(session -> mapper.map(session, SessionGetDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<SessionDTO> listClientPsychologistSessionsById(Integer clientId, Integer psychologistId) {
-        List<Session> sessions = sessionRepository.findByClientIdAndPsychologistId(clientId, psychologistId);
+    public List<SessionGetDTO> listClientPsychologistSessionsById(Integer clientId, Integer psychologistId) {
+        List<Session> sessions = sessionRepository.findAllByClientIdAndPsychologistId(clientId, psychologistId);
         return sessions.stream()
-                .map(session -> mapper.map(session, SessionDTO.class))
+                .map(session -> mapper.map(session, SessionGetDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -160,7 +164,7 @@ public class SessionServiceImpl implements SessionService {
             throw new RuntimeException(SESSION_ID_NULL);
         }
 
-        Optional<Session> oSession = sessionRepository.findById(sessionDTO.getId());
+        Optional<Session> oSession = sessionRepository.findById(Long.valueOf(sessionDTO.getId()));
 
         if (oSession.isPresent()) {
             Session existingSession = oSession.get();
@@ -197,24 +201,32 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public SessionDTO findById(Integer id) {
-        Optional<Session> oSession = sessionRepository.findById(id);
-        SessionDTO sessionDTO = null;
+    public SessionGetDTO findById(Integer id) {
+        Optional<Session> oSession = sessionRepository.findById(Long.valueOf(id));
+        SessionGetDTO sessionGetDTO = null;
 
         if (oSession.isPresent()) {
-            sessionDTO = mapper.map(oSession.get(), SessionDTO.class);
+            sessionGetDTO = mapper.map(oSession.get(), SessionGetDTO.class);
         }
-        return sessionDTO;
+        return sessionGetDTO;
     }
 
     @Override
-    public List<SessionDTO> listAll() {
+    public List<SessionGetDTO> listAll() {
         return sessionRepository.findAll().stream()
-                .map(session -> mapper.map(session, SessionDTO.class)).toList();
+                .map(session -> mapper.map(session, SessionGetDTO.class)).toList();
     }
 
     @Override
     public void deleteById(Integer id) {
-        sessionRepository.deleteById(id);
+        sessionRepository.deleteById(Long.valueOf(id));
+    }
+
+    public List<SessionInPsychologistListDTO> findSessionsByPsychologistId(Integer psychologistId) {
+        Specification<Session> spec = SessionSpecifications.withClientName();
+        List<Session> sessions = sessionRepository.findAll(spec);
+        return sessions.stream()
+                .map(session -> mapper.map(session, SessionInPsychologistListDTO.class))
+                .collect(Collectors.toList());
     }
 }

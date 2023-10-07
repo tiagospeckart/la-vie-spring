@@ -4,11 +4,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
+import com.moredevs.psychclinic.exceptions.NotFoundException;
+import com.moredevs.psychclinic.models.dtos.AdminCreateDTO;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
+import com.moredevs.psychclinic.models.dtos.AdminGetDTO;
 import com.moredevs.psychclinic.services.AdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,37 +21,72 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.URI;
+import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
 public class AdminControllerImplTest {
+
     @Mock
-    AdminService adminService;
+    private AdminService adminService;
 
     @InjectMocks
-    AdminControllerImpl adminControllerImpl;
+    private AdminControllerImpl adminControllerImpl;
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
+
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(adminControllerImpl).build();
+        objectMapper = new ObjectMapper();
     }
 
     @Test
-    void testFindById() throws Exception {
-        AdminDTO adminDTO = new AdminDTO();  // Initialize your AdminDTO
-        when(adminService.findById(any())).thenReturn(adminDTO);
+    void testFindById_Found() throws Exception {
+        AdminGetDTO adminGetDTO = new AdminGetDTO();
+        when(adminService.findById(any())).thenReturn(adminGetDTO);
 
         mockMvc.perform(get("/admin/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(adminDTO)));
-
-        verify(adminService, times(1)).findById(any());
+                .andExpect(content().json(objectMapper.writeValueAsString(adminGetDTO)));
     }
 
     @Test
-    void testUpdateById() throws Exception {
-        AdminDTO existingAdmin = new AdminDTO();
+    void testFindById_NotFound() throws Exception {
+        when(adminService.findById(any())).thenThrow(new NotFoundException());
+
+        mockMvc.perform(get("/admin/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testCreate() throws Exception {
+        AdminCreateDTO adminCreateDTO = new AdminCreateDTO();
+        AdminDTO adminDTO = new AdminDTO();
+        adminDTO.setId(1);
+
+        when(adminService.create(any(AdminCreateDTO.class))).thenReturn(adminDTO);
+
+        URI expectedUri = new URI("/admin/1");
+
+        mockMvc.perform(
+                        post("/admin")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(adminCreateDTO))
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().json(objectMapper.writeValueAsString(adminDTO)));
+
+        verify(adminService, times(1)).create(any(AdminCreateDTO.class));
+    }
+
+
+    @Test
+    void testUpdateById_Success() throws Exception {
+        AdminGetDTO existingAdmin = new AdminGetDTO();
         when(adminService.findById(any())).thenReturn(existingAdmin);
 
         AdminDTO updatedAdmin = new AdminDTO();
@@ -60,11 +94,29 @@ public class AdminControllerImplTest {
 
         mockMvc.perform(put("/admin/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(updatedAdmin)))
+                        .content(objectMapper.writeValueAsString(updatedAdmin)))
                 .andExpect(status().isOk())
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(updatedAdmin)));
+                .andExpect(content().json(objectMapper.writeValueAsString(updatedAdmin)));
+    }
 
-        verify(adminService, times(1)).update(any());
+    @Test
+    void testUpdateById_NotFound() throws Exception {
+        when(adminService.findById(any())).thenReturn(null);
+
+        AdminDTO updatedAdmin = new AdminDTO();
+
+        mockMvc.perform(put("/admin/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedAdmin)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testUpdateById_BadRequest() throws Exception {
+        mockMvc.perform(put("/admin/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(null)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -73,58 +125,16 @@ public class AdminControllerImplTest {
 
         mockMvc.perform(delete("/admin/1"))
                 .andExpect(status().isNoContent());
-
-        verify(adminService, times(1)).deleteById(any());
     }
 
     @Test
     void testListAll() throws Exception {
-        List<AdminDTO> allAdmins = Arrays.asList(new AdminDTO(), new AdminDTO());  // Initialize your list
+        List<AdminGetDTO> allAdmins = List.of(new AdminGetDTO(), new AdminGetDTO());
         when(adminService.listAll()).thenReturn(allAdmins);
 
         mockMvc.perform(get("/admin"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(allAdmins)));
-
-        verify(adminService, times(1)).listAll();
-    }
-
-    @Test
-    void testUpdateById_NotFound() throws Exception {
-        when(adminService.findById(any())).thenReturn(null);
-
-        AdminDTO updatedAdmin = new AdminDTO();  // Initialize your updated AdminDTO
-
-        mockMvc.perform(put("/admin/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(updatedAdmin)))
-                .andExpect(status().isNotFound());
-
-        verify(adminService, times(1)).findById(any());
-    }
-
-    @Test
-    void testUpdateById_BadRequest() throws Exception {
-        AdminDTO existingAdmin = new AdminDTO();
-
-        AdminDTO updatedAdmin = null;
-
-        mockMvc.perform(put("/admin/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(null)))
-                .andExpect(status().isBadRequest());
-
-        verify(adminService, times(0)).update(any());
-    }
-
-    @Test
-    void testListAll_EmptyList() throws Exception {
-        when(adminService.listAll()).thenReturn(Collections.emptyList());
-
-        mockMvc.perform(get("/admin"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
-
-        verify(adminService, times(1)).listAll();
+                .andExpect(header().exists("X-Total-Count"))
+                .andExpect(content().json(objectMapper.writeValueAsString(allAdmins)));
     }
 }

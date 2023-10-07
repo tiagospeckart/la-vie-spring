@@ -1,5 +1,6 @@
 package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
 import com.moredevs.psychclinic.models.entities.Client;
 import com.moredevs.psychclinic.repositories.ClientRepository;
@@ -31,14 +32,15 @@ public class ClientServiceImplTest {
 
     @Test
     public void testCreate() {
+        ClientCreateDTO creatingClient = new ClientCreateDTO();
         ClientDTO clientDTO = new ClientDTO();
         Client client = new Client();
 
-        when(mockMapper.map(clientDTO, Client.class)).thenReturn(client);
+        when(mockMapper.map(creatingClient, Client.class)).thenReturn(client);
         when(mockClientRepository.save(client)).thenReturn(client);
         when(mockMapper.map(client, ClientDTO.class)).thenReturn(clientDTO);
 
-        ClientDTO result = clientService.create(clientDTO);
+        ClientDTO result = clientService.create(creatingClient);
 
         assertNotNull(result);
         assertEquals(clientDTO, result);
@@ -46,12 +48,13 @@ public class ClientServiceImplTest {
 
     @Test
     public void testCreate_failure() {
-        ClientDTO clientDTO = new ClientDTO();
+        ClientCreateDTO creatingClient = new ClientCreateDTO();
 
-        when(mockMapper.map(clientDTO, Client.class)).thenThrow(new RuntimeException(CLIENT_INSERTION_ERROR));
+        when(mockMapper.map(creatingClient, Client.class)).thenThrow(new RuntimeException(CLIENT_INSERTION_ERROR));
 
-        assertThrows(RuntimeException.class, () -> clientService.create(clientDTO));
+        assertThrows(RuntimeException.class, () -> clientService.create(creatingClient));
     }
+
 
     @Test
     public void testUpdate_existingClient() {

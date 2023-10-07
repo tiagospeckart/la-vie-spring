@@ -1,6 +1,8 @@
 package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.models.dtos.AdminCreateDTO;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
+import com.moredevs.psychclinic.models.dtos.AdminGetDTO;
 import com.moredevs.psychclinic.models.entities.Admin;
 import com.moredevs.psychclinic.repositories.AdminRepository;
 import com.moredevs.psychclinic.services.AdminService;
@@ -25,14 +27,14 @@ public class AdminServiceImpl implements AdminService {
     ModelMapper mapper;
 
     @Override
-    public AdminDTO create(AdminDTO adminDTO) throws RuntimeException {
-        return save(adminDTO);
+    public AdminDTO create(AdminCreateDTO adminCreateDTO) throws RuntimeException {
+        return save(adminCreateDTO);
     }
 
     @Override
-    public AdminDTO save(AdminDTO adminDTO) throws RuntimeException {
+    public AdminDTO save(AdminCreateDTO adminCreateDTO) throws RuntimeException {
         try {
-            Admin admin = mapper.map(adminDTO, Admin.class);
+            Admin admin = mapper.map(adminCreateDTO, Admin.class);
             Admin createdAdmin = adminRepository.save(admin);
             return mapper.map(createdAdmin, AdminDTO.class);
         } catch (Exception e) {
@@ -81,20 +83,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminDTO findById(Integer id) {
+    public AdminGetDTO findById(Integer id) {
         Optional<Admin> oAdmin = adminRepository.findById(id);
-        AdminDTO adminDTO = null;
+        AdminGetDTO adminGetDTO = null;
 
         if (oAdmin.isPresent()) {
-            adminDTO = mapper.map(oAdmin.get(), AdminDTO.class);
+            adminGetDTO = mapper.map(oAdmin.get(), AdminGetDTO.class);
         }
-        return adminDTO;
+        return adminGetDTO;
     }
 
     @Override
-    public List<AdminDTO> listAll() {
+    public List<AdminGetDTO> listAll() {
         return adminRepository.findAll().stream()
-                .map(admin -> mapper.map(admin, AdminDTO.class)).toList();
+                .map(admin -> mapper.map(admin, AdminGetDTO.class)).toList();
     }
 
     @Override

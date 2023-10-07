@@ -1,6 +1,8 @@
 package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
+import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.models.entities.Client;
 import com.moredevs.psychclinic.models.entities.Session;
@@ -31,14 +33,14 @@ public class ClientServiceImpl implements ClientService {
     ModelMapper mapper;
 
     @Override
-    public ClientDTO create(ClientDTO clientDTO) {
-        return save(clientDTO);
+    public ClientDTO create(ClientCreateDTO clientCreateDTO) {
+        return save(clientCreateDTO);
     }
 
     @Override
-    public ClientDTO save(ClientDTO clientDTO) {
+    public ClientDTO save(ClientCreateDTO clientCreateDTO) {
         try {
-            Client client = mapper.map(clientDTO, Client.class);
+            Client client = mapper.map(clientCreateDTO, Client.class);
             Client createdClient = clientRepository.save(client);
             return mapper.map(createdClient, ClientDTO.class);
         } catch (Exception e) {
@@ -112,20 +114,20 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTO findById(Integer id) {
+    public ClientGetDTO findById(Integer id) {
         Optional<Client> oClient = clientRepository.findById(id);
-        ClientDTO clientDTO = null;
+        ClientGetDTO clientGetDTO = null;
 
         if (oClient.isPresent()) {
-            clientDTO = mapper.map(oClient.get(), ClientDTO.class);
+            clientGetDTO = mapper.map(oClient.get(), ClientGetDTO.class);
         }
-        return clientDTO;
+        return clientGetDTO;
     }
 
     @Override
-    public List<ClientDTO> listAll() {
+    public List<ClientGetDTO> listAll() {
         return clientRepository.findAll().stream()
-                .map(client -> mapper.map(client, ClientDTO.class)).toList();
+                .map(client -> mapper.map(client, ClientGetDTO.class)).toList();
     }
 
     @Override

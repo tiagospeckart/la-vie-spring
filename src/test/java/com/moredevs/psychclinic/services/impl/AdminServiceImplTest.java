@@ -1,5 +1,6 @@
 package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.models.dtos.AdminCreateDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,11 +40,12 @@ public class AdminServiceImplTest {
 
     @Test
     public void testCreateAdmin() {
-        when(mapper.map(adminDTO, Admin.class)).thenReturn(admin);
+        AdminCreateDTO adminCreateDTO = new AdminCreateDTO();
+        when(mapper.map(adminCreateDTO, Admin.class)).thenReturn(admin);  // changed from adminDTO
         when(adminRepository.save(admin)).thenReturn(admin);
         when(mapper.map(admin, AdminDTO.class)).thenReturn(adminDTO);
 
-        AdminDTO result = service.create(adminDTO);
+        AdminDTO result = service.create(adminCreateDTO);
 
         assertEquals(adminDTO, result);
         verify(adminRepository, times(1)).save(admin);
@@ -51,11 +53,12 @@ public class AdminServiceImplTest {
 
     @Test
     public void testSaveAdmin() {
-        when(mapper.map(adminDTO, Admin.class)).thenReturn(admin);
+        AdminCreateDTO adminCreateDTO = new AdminCreateDTO();
+        when(mapper.map(adminCreateDTO, Admin.class)).thenReturn(admin);
         when(adminRepository.save(admin)).thenReturn(admin);
         when(mapper.map(admin, AdminDTO.class)).thenReturn(adminDTO);
 
-        AdminDTO result = service.save(adminDTO);
+        AdminDTO result = service.save(adminCreateDTO);
 
         assertEquals(adminDTO, result);
         verify(adminRepository, times(1)).save(admin);

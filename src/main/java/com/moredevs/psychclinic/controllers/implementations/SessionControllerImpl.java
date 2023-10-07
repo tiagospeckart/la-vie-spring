@@ -3,6 +3,7 @@ package com.moredevs.psychclinic.controllers.implementations;
 import com.moredevs.psychclinic.controllers.SessionController;
 import com.moredevs.psychclinic.models.dtos.SessionCreateDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
+import com.moredevs.psychclinic.models.dtos.SessionGetDTO;
 import com.moredevs.psychclinic.services.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,12 +33,12 @@ public class SessionControllerImpl implements SessionController {
                     @ApiResponse(responseCode = "404", description = "Session not found")
             })
     @Override
-    public ResponseEntity<SessionDTO> findById(@PathVariable Integer id) {
-        SessionDTO sessionDTO = sessionService.findById(id);
-        if (sessionDTO == null) {
+    public ResponseEntity<SessionGetDTO> findById(@PathVariable Integer id) {
+        SessionGetDTO sessionGetDTO = sessionService.findById(id);
+        if (sessionGetDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(sessionDTO);
+        return ResponseEntity.ok(sessionGetDTO);
     }
 
     @PostMapping
@@ -76,8 +77,8 @@ public class SessionControllerImpl implements SessionController {
             @ApiResponse(responseCode = "200", description = "Sessions listed")
     })
     @Override
-    public ResponseEntity<List<SessionDTO>> listAll() {
-        List<SessionDTO> allSessions = sessionService.listAll();
+    public ResponseEntity<List<SessionGetDTO>> listAll() {
+        List<SessionGetDTO> allSessions = sessionService.listAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", String.valueOf(allSessions.size()));
         return ResponseEntity.ok().headers(headers).body(allSessions);
@@ -138,8 +139,8 @@ public class SessionControllerImpl implements SessionController {
             @ApiResponse(responseCode = "200", description = "Sessions listed")
     })
     @Override
-    public ResponseEntity<List<SessionDTO>> listClientSessionsById(@PathVariable Integer clientId) {
-        List<SessionDTO> clientSessions = sessionService.listClientSessionsById(clientId);
+    public ResponseEntity<List<SessionGetDTO>> listClientSessionsById(@PathVariable Integer clientId) {
+        List<SessionGetDTO> clientSessions = sessionService.listClientSessionsById(clientId);
         return ResponseEntity.ok(clientSessions);
     }
 
@@ -148,8 +149,8 @@ public class SessionControllerImpl implements SessionController {
             @ApiResponse(responseCode = "200", description = "Sessions listed")
     })
     @Override
-    public ResponseEntity<List<SessionDTO>> listPsychologistSessionsById(@PathVariable Integer psychologistId) {
-        List<SessionDTO> psychologistSessions = sessionService.listPsychologistSessionsById(psychologistId);
+    public ResponseEntity<List<SessionGetDTO>> listPsychologistSessionsById(@PathVariable Integer psychologistId) {
+        List<SessionGetDTO> psychologistSessions = sessionService.listPsychologistSessionsById(psychologistId);
         return ResponseEntity.ok(psychologistSessions);
     }
 
@@ -159,9 +160,9 @@ public class SessionControllerImpl implements SessionController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Sessions listed")
             })
-    public ResponseEntity<List<SessionDTO>> listClientPsychologistSessionsById(@PathVariable Integer clientId,
+    public ResponseEntity<List<SessionGetDTO>> listClientPsychologistSessionsById(@PathVariable Integer clientId,
                                                                                @PathVariable Integer psychologistId) {
-        List<SessionDTO> sessions = sessionService.listClientPsychologistSessionsById(clientId, psychologistId);
+        List<SessionGetDTO> sessions = sessionService.listClientPsychologistSessionsById(clientId, psychologistId);
         return ResponseEntity.ok(sessions);
     }
 }

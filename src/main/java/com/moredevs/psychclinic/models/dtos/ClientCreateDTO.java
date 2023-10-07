@@ -3,7 +3,9 @@ package com.moredevs.psychclinic.models.dtos;
 import com.moredevs.psychclinic.models.enums.Status;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,10 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class AdminDTO extends BaseAuditDTO{
-    private Integer id;
-    private String email;
-    private String password;
+public class ClientCreateDTO {
+    private String address;
     private String phone;
-    private Status status;
+    private String email;
+    private LocalDate dateOfBirth;
 }
