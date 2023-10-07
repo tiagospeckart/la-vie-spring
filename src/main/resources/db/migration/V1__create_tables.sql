@@ -3,6 +3,7 @@
 -- Create the Client table with columns from Person
 CREATE TABLE IF NOT EXISTS client (
     id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
     email VARCHAR(40) NOT NULL,
     phone VARCHAR(30),
     status VARCHAR(10),
@@ -12,12 +13,14 @@ CREATE TABLE IF NOT EXISTS client (
     updated_by VARCHAR(255),
     date_of_birth DATE NOT NULL,
     address VARCHAR(150),
-    observations TEXT
+    observations TEXT,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- Create the Psychologist table with columns from Person
 CREATE TABLE IF NOT EXISTS psychologist (
     id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
     email VARCHAR(40) NOT NULL,
     phone VARCHAR(30),
     status VARCHAR(10),
@@ -28,7 +31,8 @@ CREATE TABLE IF NOT EXISTS psychologist (
     password VARCHAR(255) NOT NULL,
     license_number VARCHAR(255) NOT NULL UNIQUE,
     specialization_area VARCHAR(100),
-    biography TEXT
+    biography TEXT,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- Create the Admin table with columns from Person

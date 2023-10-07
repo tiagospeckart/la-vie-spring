@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 public class SessionInPsychologistListDTO{
-    private String name;
+    private String clientName;
     private LocalDateTime dateAndTime;
     private String sessionNotes;
     private SessionStatus sessionStatus;

@@ -15,6 +15,7 @@ import java.util.List;
 @ToString
 public class ClientGetDTO extends BaseAuditDTO {
     private Integer id;
+    private String name;
     private String address;
     private String phone;
     private String email;
@@ -22,4 +23,5 @@ public class ClientGetDTO extends BaseAuditDTO {
     private List<SessionInClientListDTO> sessions;
     private String observations;
     private Status status;
+    private Boolean isDeleted;
 }

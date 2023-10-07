@@ -1,5 +1,6 @@
 package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.exceptions.ResourceNotFoundException;
 import com.moredevs.psychclinic.models.dtos.*;
 import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Psychologist.*;
 
 @Service
+@Transactional
 public class PsychologistServiceImpl implements PsychologistService {
 
     private static final Logger logger = LoggerFactory.getLogger(PsychologistService.class);
@@ -55,7 +57,6 @@ public class PsychologistServiceImpl implements PsychologistService {
     }
 
     @Override
-    @Transactional
     public PsychologistDTO update(PsychologistDTO psychologistDTO) {
         if (psychologistDTO.getId() == null) {
             throw new RuntimeException(PSYCHOLOGIST_NULL_ID);
@@ -127,7 +128,7 @@ public class PsychologistServiceImpl implements PsychologistService {
 
     @Override
     public List<PsychologistGetDTO> listAll() {
-        return psychologistRepository.findAll().stream()
+        return psychologistRepository.findAllActivePsychologists().stream()
                 .map(psychologist -> mapper.map(psychologist, PsychologistGetDTO.class))
                 .peek(psychologistDTO -> {
                     Integer id = psychologistDTO.getId();
@@ -139,6 +140,18 @@ public class PsychologistServiceImpl implements PsychologistService {
 
     @Override
     public void deleteById(Integer id) {
-        psychologistRepository.deleteById(id);
+        softDeletePsychologistById(id);
+    }
+
+    public void softDeletePsychologistById(Integer id) {
+        Optional<Psychologist> optionalPsychologist = psychologistRepository.findById(id);
+
+        if(optionalPsychologist.isPresent()) {
+            Psychologist psychologist = optionalPsychologist.get();
+            psychologist.setIsDeleted(true);
+            psychologistRepository.save(psychologist);
+        } else {
+            throw new ResourceNotFoundException("Psychologist with ID " + id + " not found");
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.exceptions.ResourceNotFoundException;
 import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
 import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.models.entities.Client;
+import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.ClientRepository;
 import com.moredevs.psychclinic.services.ClientService;
@@ -126,12 +128,25 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientGetDTO> listAll() {
-        return clientRepository.findAll().stream()
+        return clientRepository.findAllActiveClients().stream()
                 .map(client -> mapper.map(client, ClientGetDTO.class)).toList();
     }
 
     @Override
     public void deleteById(Integer id) {
-        clientRepository.deleteById(id);
+        softDeleteClientById(id);
+    }
+
+    @Transactional
+    public void softDeleteClientById(Integer id) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+
+        if(optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setIsDeleted(true);
+            clientRepository.save(client);
+        } else {
+            throw new ResourceNotFoundException("Psychologist with ID " + id + " not found");
+        }
     }
 }

@@ -13,4 +13,5 @@ public interface PsychologistService {
     List<PsychologistGetDTO> listAll();
     PsychologistDTO update(PsychologistDTO updatingPsychologist);
     void deleteById(Integer id);
+    void softDeletePsychologistById(Integer id);
 }

@@ -223,7 +223,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     public List<SessionInPsychologistListDTO> findSessionsByPsychologistId(Integer psychologistId) {
-        Specification<Session> spec = SessionSpecifications.withClientName();
+        Specification<Session> spec = SessionSpecifications.withClientName(psychologistId);
         List<Session> sessions = sessionRepository.findAll(spec);
         return sessions.stream()
                 .map(session -> mapper.map(session, SessionInPsychologistListDTO.class))

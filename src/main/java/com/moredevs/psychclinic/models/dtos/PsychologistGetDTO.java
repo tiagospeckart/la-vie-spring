@@ -14,6 +14,7 @@ import java.util.List;
 @ToString
 public class PsychologistGetDTO extends BaseAuditDTO {
     private Integer id;
+    private String name;
     private String email;
     private String password;
     private String phone;
@@ -22,4 +23,5 @@ public class PsychologistGetDTO extends BaseAuditDTO {
     private String biography;
     private Status status;
     private List<SessionInPsychologistListDTO> sessions;
+    private Boolean isDeleted;
 }
