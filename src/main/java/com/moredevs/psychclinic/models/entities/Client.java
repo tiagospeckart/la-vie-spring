@@ -87,6 +87,9 @@ public class Client {
         if (status == null) {
             status = Status.ACTIVE;
         }
+
+        // Setting isDeleted to false if it's null
+        this.isDeleted = this.isDeleted != null ? this.isDeleted : false;
     }
 
     @PreUpdate

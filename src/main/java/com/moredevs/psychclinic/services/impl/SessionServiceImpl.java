@@ -1,10 +1,7 @@
 package com.moredevs.psychclinic.services.impl;
 
 import com.moredevs.psychclinic.exceptions.ResourceNotFoundException;
-import com.moredevs.psychclinic.models.dtos.SessionCreateDTO;
-import com.moredevs.psychclinic.models.dtos.SessionDTO;
-import com.moredevs.psychclinic.models.dtos.SessionGetDTO;
-import com.moredevs.psychclinic.models.dtos.SessionInPsychologistListDTO;
+import com.moredevs.psychclinic.models.dtos.*;
 import com.moredevs.psychclinic.models.entities.Client;
 import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
@@ -66,8 +63,11 @@ public class SessionServiceImpl implements SessionService {
             session.setSessionNotes(sessionCreateDTO.getSessionNotes());
             session.setSessionStatus(sessionCreateDTO.getSessionStatus());
 
-            Session createdSession = sessionRepository.save(session);
-            return mapper.map(createdSession, SessionDTO.class);
+            Session savedSession = sessionRepository.save(session);
+            SessionDTO sessionReturnDto = mapper.map(savedSession, SessionDTO.class);
+            sessionReturnDto.setClientDTO(mapper.map(client, ClientDTO.class));
+            sessionReturnDto.setPsychologistDTO(mapper.map(psychologist, PsychologistDTO.class));
+            return sessionReturnDto;
 
         } catch (Exception e) {
             logger.error(SESSION_INSERTION_ERROR, e);
