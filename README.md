@@ -18,7 +18,7 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
   - [x] Functional Requirements
   - [x] Non-Functional Requirements
   - [x] Business Rules
-- [ ] Minimum test coverage of 50%
+- [ ] Minimum test coverage of 50% (Currently 41%)
 - [x] Database migrations using Flyway
 - [x] Build automation through Maven
 - [x] Adherence to clean code principles
@@ -44,5 +44,5 @@ While it doesn't happen, this application with run if you have Postgres installe
 
 ## Swagger documentation
 
-Access `http://{context-path}:{port}/api/swagger-ui` after SpringBoot initialization.
-On local machines, its `http://localhost:8080/api/swagger-ui/`
+Access `http://{context-path}:{port}/api/swagger-ui/index.html` after SpringBoot initialization.
+On local machines, its `http://localhost:8080/api/swagger-ui/index.html`
