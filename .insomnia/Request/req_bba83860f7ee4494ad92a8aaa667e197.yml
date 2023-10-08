@@ -1,22 +1,21 @@
-_id: req_dc0d3bdcb8e8477a93812a179f58c063
+_id: req_bba83860f7ee4494ad92a8aaa667e197
 type: Request
-parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1696734214577
-created: 1695513780075
+parentId: fld_3fe9112765124708bc081b69b9adb585
+modified: 1695604031538
+created: 1695597427772
 url: "{{ _.base_url }}{{ _.base_route }}"
-name: CreateClient
+name: CreateSession
 description: ""
 method: POST
 body:
   mimeType: application/json
-  text: |-
+  text: |
     {
-    	"name": "Hdjhkjqwee",
-    	"address": "Rua Sâo Paulo",
-    	"phone": "9999-7899",
-    	"email": "client3@emasail.com",
-    	"dateOfBirth": "1980-05-25",
-    	"observations": "Client 3 details"
+        "psychologistId": 1,
+        "clientId": 2,
+        "dateAndTime": "2023-10-10T10:00:00",
+        "sessionNotes": "Second session with Client 1 and Psychologist 1",
+        "sessionStatus": "PLANNED"
     }
 parameters:
   - id: pair_1e81fe596f254e90bfe1829627083edb

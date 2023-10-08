@@ -1,0 +1,27 @@
+_id: req_bb4b6e6206ea4013917c4f0701faf3bf
+type: Request
+parentId: fld_13e1f4fcccd34a0b91dd81d4c250df2e
+modified: 1695596605663
+created: 1695595849121
+url: "{{ _.base_url }}{{ _.base_route }}/1"
+name: GetOnePsychologist
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_646580e6ac1948a68fb6ca60dcb328bd
+    name: ""
+    value: ""
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841498
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,22 +1,23 @@
-_id: req_dc0d3bdcb8e8477a93812a179f58c063
+_id: req_8eaae7630d9144a98583376ab7178c26
 type: Request
-parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1696734214577
-created: 1695513780075
-url: "{{ _.base_url }}{{ _.base_route }}"
-name: CreateClient
+parentId: fld_13e1f4fcccd34a0b91dd81d4c250df2e
+modified: 1695596176647
+created: 1695595849125
+url: "{{ _.base_url }}{{ _.base_route }}/3"
+name: UpdatePsychologist
 description: ""
-method: POST
+method: PUT
 body:
   mimeType: application/json
   text: |-
     {
-    	"name": "Hdjhkjqwee",
-    	"address": "Rua Sâo Paulo",
-    	"phone": "9999-7899",
-    	"email": "client3@emasail.com",
-    	"dateOfBirth": "1980-05-25",
-    	"observations": "Client 3 details"
+    	"email": "psychologist3@email.com",
+    	"password": "psychopass4",
+    	"phone": "9999-7777",
+    	"licenseNumber": "license333",
+    	"specializationArea": "Pets Psychology",
+    	"biography": "Bio for Psychologist 3",
+    	"status": "ACTIVE"
     }
 parameters:
   - id: pair_1e81fe596f254e90bfe1829627083edb
@@ -29,7 +30,7 @@ headers:
   - name: User-Agent
     value: Insomnia/2023.5.7
 authentication: {}
-metaSortKey: -1695298841448
+metaSortKey: -1695298841423
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

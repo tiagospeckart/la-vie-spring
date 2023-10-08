@@ -1,19 +1,19 @@
-_id: req_ea0a0344e9664b239e84b10664939a53
+_id: req_df0b7ed9a15f4465b172c01ea0463904
 type: Request
-parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1696734226893
-created: 1695513780074
-url: "{{ _.base_url }}{{ _.base_route }}/3"
-name: DeleteClientById
+parentId: fld_3fe9112765124708bc081b69b9adb585
+modified: 1695604317979
+created: 1695604214105
+url: "{{ _.base_url }}{{ _.base_route }}/{{ _.client }}/2"
+name: ListAllSessionsByClient
 description: ""
-method: DELETE
+method: GET
 body: {}
 parameters: []
 headers:
   - name: User-Agent
     value: Insomnia/2023.5.7
 authentication: {}
-metaSortKey: -1695298841398
+metaSortKey: -1695298841510.5
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

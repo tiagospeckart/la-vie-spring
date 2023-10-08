@@ -1,0 +1,13 @@
+_id: fld_13e1f4fcccd34a0b91dd81d4c250df2e
+type: RequestGroup
+parentId: wrk_37e989fcbd854b81aada12a58220fe0b
+modified: 1695595877799
+created: 1695595849118
+name: Psychologist
+description: ""
+environment:
+  base_route: /psychologist
+environmentPropertyOrder:
+  "&":
+    - base_route
+metaSortKey: -1695298837228
