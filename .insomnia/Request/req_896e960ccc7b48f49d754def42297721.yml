@@ -1,0 +1,23 @@
+_id: req_896e960ccc7b48f49d754def42297721
+type: Request
+parentId: fld_9b090284bd9f47adac3451c86bf60bf2
+modified: 1695298960574
+created: 1695298841548
+url: "{{ _.base_url }}{{ _.base_route }}"
+name: ListAllAdmin
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841548
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,11 +1,15 @@
-package com.moredevs.psychclinic.service.impl;
+package com.moredevs.psychclinic.services.impl;
 
+import com.moredevs.psychclinic.exceptions.ResourceNotFoundException;
+import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
+import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.models.entities.Client;
+import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.ClientRepository;
-import com.moredevs.psychclinic.service.ClientService;
+import com.moredevs.psychclinic.services.ClientService;
 import com.moredevs.psychclinic.utils.EntityUtils;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -31,14 +35,14 @@ public class ClientServiceImpl implements ClientService {
     ModelMapper mapper;
 
     @Override
-    public ClientDTO create(ClientDTO clientDTO) {
-        return save(clientDTO);
+    public ClientDTO create(ClientCreateDTO clientCreateDTO) {
+        return save(clientCreateDTO);
     }
 
     @Override
-    public ClientDTO save(ClientDTO clientDTO) {
+    public ClientDTO save(ClientCreateDTO clientCreateDTO) {
         try {
-            Client client = mapper.map(clientDTO, Client.class);
+            Client client = mapper.map(clientCreateDTO, Client.class);
             Client createdClient = clientRepository.save(client);
             return mapper.map(createdClient, ClientDTO.class);
         } catch (Exception e) {
@@ -112,24 +116,37 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTO findById(Integer id) {
+    public ClientGetDTO findById(Integer id) {
         Optional<Client> oClient = clientRepository.findById(id);
-        ClientDTO clientDTO = null;
+        ClientGetDTO clientGetDTO = null;
 
         if (oClient.isPresent()) {
-            clientDTO = mapper.map(oClient.get(), ClientDTO.class);
+            clientGetDTO = mapper.map(oClient.get(), ClientGetDTO.class);
         }
-        return clientDTO;
+        return clientGetDTO;
     }
 
     @Override
-    public List<ClientDTO> listAll() {
-        return clientRepository.findAll().stream()
-                .map(client -> mapper.map(client, ClientDTO.class)).toList();
+    public List<ClientGetDTO> listAll() {
+        return clientRepository.findAllActiveClients().stream()
+                .map(client -> mapper.map(client, ClientGetDTO.class)).toList();
     }
 
     @Override
     public void deleteById(Integer id) {
-        clientRepository.deleteById(id);
+        softDeleteClientById(id);
+    }
+
+    @Transactional
+    public void softDeleteClientById(Integer id) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+
+        if(optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setIsDeleted(true);
+            clientRepository.save(client);
+        } else {
+            throw new ResourceNotFoundException("Psychologist with ID " + id + " not found");
+        }
     }
 }

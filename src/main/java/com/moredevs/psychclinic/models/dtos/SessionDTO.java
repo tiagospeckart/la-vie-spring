@@ -11,15 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SessionDTO {
+public class SessionDTO extends BaseAuditDTO {
     private Integer id;
     private PsychologistDTO psychologistDTO;
     private ClientDTO clientDTO;
     private LocalDateTime dateAndTime;
     private String sessionNotes;
     private SessionStatus sessionStatus;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
 }

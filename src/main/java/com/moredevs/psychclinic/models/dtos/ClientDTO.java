@@ -13,8 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
-public class ClientDTO {
+public class ClientDTO extends BaseAuditDTO {
     private Integer id;
+    private String name;
     private String address;
     private String phone;
     private String email;
@@ -22,8 +23,5 @@ public class ClientDTO {
     private List<SessionDTO> sessions;
     private String observations;
     private Status status;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
+    private Boolean isDeleted;
 }

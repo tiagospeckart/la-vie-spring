@@ -7,16 +7,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
 import static com.moredevs.psychclinic.utils.constants.Constants.PASSWORD_MAX_SIZE;
 import static com.moredevs.psychclinic.utils.constants.Constants.PASSWORD_MIN_SIZE;
+
+;
 
 @Entity
 @Getter

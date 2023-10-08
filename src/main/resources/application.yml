@@ -1,20 +1,19 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/psych-clinic
-    username: postgres
-    password: postgres
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-    properties:
-      hibernate:
-        default_schema: la-vie
-    schemas: la-vie
-  flyway:
-    schemas: la-vie
+  profiles:
+    active: dev
+
+management:
+  endpoint:
+    health:
+      show-details: always
 
 server:
   error:
     include-message: always
   servlet:
     contextPath: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  version: 0.0.1

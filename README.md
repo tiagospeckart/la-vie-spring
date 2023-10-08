@@ -12,8 +12,8 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
 - [x] Backend software developed using SpringBoot
 - [x] Data persistence through Postgresql
 - [x] UML Class Diagram
-- [ ] Insomnia file with comprehensive API call examples
-- [ ] API documentation using Swagger
+- [x] Insomnia file with comprehensive API call examples
+- [x] API documentation using Swagger
 - [x] Requisite List
   - [x] Functional Requirements
   - [x] Non-Functional Requirements
@@ -37,4 +37,12 @@ Documentation chapters will be organized as Wiki this [Repository Wiki](https://
 
 ## Installation
 
-*TODO*
+Localhost installation steps can be quite tricky, so later I'll be working towards containerization with Docker, and after that, a remote deploy.
+While it doesn't happen, this application with run if you have Postgres installed, and manually create a Database called "psych-clinic" within your postgre local connection.
+
+---
+
+## Swagger documentation
+
+Access `http://{context-path}:{port}/api/swagger-ui` after SpringBoot initialization.
+On local machines, its `http://localhost:8080/api/swagger-ui/`

@@ -1,10 +1,16 @@
 package com.moredevs.psychclinic.controllers.implementations;
 
 import com.moredevs.psychclinic.controllers.ClientController;
-import com.moredevs.psychclinic.exceptions.NotFoundException;
+import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
-import com.moredevs.psychclinic.service.ClientService;
-import org.modelmapper.ModelMapper;
+import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
+import com.moredevs.psychclinic.services.ClientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -16,25 +22,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/client")
+@Tag(name = "Client Management", description = "Endpoints for managing clients")
 public class ClientControllerImpl implements ClientController {
 
     @Autowired
     private ClientService clientService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "Find Client by ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Client found",
+                            content = @Content(schema = @Schema(implementation = ClientDTO.class))),
+                    @ApiResponse(responseCode = "404", description = "Client not found")
+            })
     @Override
-    public ResponseEntity<ClientDTO> findById(@PathVariable Integer id) {
-        ClientDTO clientDTO = clientService.findById(id);
-        if (clientDTO == null) {
-            return ResponseEntity.notFound().build();  // Returning a 404 if not found
+    public ResponseEntity<ClientGetDTO> findById(@Parameter(description = "ID of client to be searched") @PathVariable Integer id) {
+        ClientGetDTO clientGetDTO = clientService.findById(id);
+        if (clientGetDTO == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(clientDTO);
+        return ResponseEntity.ok(clientGetDTO);
     }
 
     @PostMapping
+    @Operation(summary = "Create a new Client",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Client created successfully"),
+                    @ApiResponse(responseCode = "400", description = "Invalid input")
+            })
     @Override
-    public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO clientDTO) {
-        ClientDTO createdClient = clientService.create(clientDTO);
+    public ResponseEntity<ClientDTO> create(@Parameter(description = "Client to add") @RequestBody ClientCreateDTO clientCreateDTO) {
+        ClientDTO createdClient = clientService.create(clientCreateDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdClient.getId())
@@ -43,29 +61,45 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update an existing Client",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Updated successfully"),
+                    @ApiResponse(responseCode = "404", description = "Client not found"),
+                    @ApiResponse(responseCode = "400", description = "Invalid input")
+            })
     @Override
-    public ResponseEntity<ClientDTO> updateById(@PathVariable Integer id, @RequestBody ClientDTO updatedClient) {
+    public ResponseEntity<ClientDTO> updateById(@Parameter(description = "ID of client to be updated") @PathVariable Integer id,
+                                                @org.jetbrains.annotations.NotNull @Parameter(description = "Updated client") @RequestBody ClientDTO updatedClient) {
         updatedClient.setId(id);
         ClientDTO savedClient = clientService.update(updatedClient);
         if (savedClient == null) {
-            return ResponseEntity.notFound().build();  // Returning a 404 if update operation failed
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(savedClient);
     }
 
     @GetMapping
+    @Operation(summary = "List all Clients",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation")
+            })
     @Override
-    public ResponseEntity<List<ClientDTO>> listAll() {
-        List<ClientDTO> allClients = clientService.listAll();
+    public ResponseEntity<List<ClientGetDTO>> listAll() {
+        List<ClientGetDTO> allClients = clientService.listAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", String.valueOf(allClients.size()));
         return ResponseEntity.ok().headers(headers).body(allClients);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a Client by ID",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Deleted successfully"),
+                    @ApiResponse(responseCode = "404", description = "Client not found")
+            })
     @Override
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteById(@Parameter(description = "ID of client to be deleted") @PathVariable Integer id) {
         clientService.deleteById(id);
-        return ResponseEntity.noContent().build();  // Returning a 204, no content if delete is successful
+        return ResponseEntity.noContent().build();
     }
 }

@@ -22,12 +22,12 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "psychologist_id")
+    @ManyToOne
+    @JoinColumn(name = "psychologist_id", updatable = false)
     private Psychologist psychologist;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @ManyToOne
+    @JoinColumn(name = "client_id", updatable = false)
     private Client client;
 
     @Column(columnDefinition = "timestamp")
@@ -59,6 +59,7 @@ public class Session {
     @PrePersist
     public void prePersist() {
         LocalDateTime now = LocalDateTime.now();
+        this.sessionStatus = this.sessionStatus != null ? this.sessionStatus : SessionStatus.valueOf("PLANNED");
         this.createdAt = now;
         this.updatedAt = now;
         this.createdBy = this.createdBy != null ? this.createdBy : "system";

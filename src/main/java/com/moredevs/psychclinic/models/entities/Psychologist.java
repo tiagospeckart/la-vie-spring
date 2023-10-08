@@ -32,6 +32,10 @@ public class Psychologist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
+    @Column(nullable = false)
+    private String name;
+
     @Email
     @NotNull
     @Column(length = 40, nullable = false)
@@ -76,6 +80,9 @@ public class Psychologist {
     @LastModifiedBy
     private String updatedBy;
 
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+
     // Lifecycle Callbacks
     @PrePersist
     public void prePersist() {
@@ -84,6 +91,12 @@ public class Psychologist {
         this.updatedAt = now;
         this.createdBy = this.createdBy != null ? this.createdBy : "system";
         this.updatedBy = this.updatedBy != null ? this.updatedBy : "system";
+
+        // Setting isDeleted to false if it's null
+        this.isDeleted = this.isDeleted != null ? this.isDeleted : false;
+
+        // Setting status to INACTIVE if it's null
+        this.status = this.status != null ? this.status : Status.INACTIVE;
     }
 
     @PreUpdate

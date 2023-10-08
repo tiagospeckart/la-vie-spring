@@ -14,7 +14,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -36,6 +35,10 @@ public class Client {
     @Column(length = 40, nullable = false)
     private String email;
 
+    @NotNull
+    @Column(nullable = false)
+    private String name;
+
     @Column(length = 30)
     private String phone;
 
@@ -53,6 +56,9 @@ public class Client {
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Session> sessions;
+
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isDeleted;
 
     @CreatedDate
     @Column(updatable = false)
@@ -81,6 +87,9 @@ public class Client {
         if (status == null) {
             status = Status.ACTIVE;
         }
+
+        // Setting isDeleted to false if it's null
+        this.isDeleted = this.isDeleted != null ? this.isDeleted : false;
     }
 
     @PreUpdate

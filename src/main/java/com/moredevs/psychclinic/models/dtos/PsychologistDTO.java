@@ -12,8 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
-public class PsychologistDTO {
+public class PsychologistDTO extends BaseAuditDTO {
     private Integer id;
+    private String name;
     private String email;
     private String password;
     private String phone;
@@ -22,8 +23,5 @@ public class PsychologistDTO {
     private String specializationArea;
     private String biography;
     private Status status;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
+    private Boolean isDeleted;
 }

@@ -11,14 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class AdminDTO {
+public class AdminDTO extends BaseAuditDTO{
     private Integer id;
     private String email;
     private String password;
     private String phone;
     private Status status;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
 }
