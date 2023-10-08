@@ -1,7 +1,7 @@
 _id: req_dc0d3bdcb8e8477a93812a179f58c063
 type: Request
 parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1695515403750
+modified: 1696734214577
 created: 1695513780075
 url: "{{ _.base_url }}{{ _.base_route }}"
 name: CreateClient
@@ -11,12 +11,12 @@ body:
   mimeType: application/json
   text: |-
     {
+    	"name": "Hdjhkjqwee",
     	"address": "Rua Sâo Paulo",
     	"phone": "9999-7899",
-    	"email": "client3@email.com",
+    	"email": "client3@emasail.com",
     	"dateOfBirth": "1980-05-25",
-    	"observations": "Client 3 details",
-    	"status": "ACTIVE"
+    	"observations": "Client 3 details"
     }
 parameters:
   - id: pair_1e81fe596f254e90bfe1829627083edb

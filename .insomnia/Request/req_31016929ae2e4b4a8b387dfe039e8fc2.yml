@@ -1,7 +1,7 @@
 _id: req_31016929ae2e4b4a8b387dfe039e8fc2
 type: Request
 parentId: fld_13e1f4fcccd34a0b91dd81d4c250df2e
-modified: 1695596080449
+modified: 1696734133422
 created: 1695595849123
 url: "{{ _.base_url }}{{ _.base_route }}"
 name: CreatePsychologist
@@ -11,13 +11,13 @@ body:
   mimeType: application/json
   text: |-
     {
+    	"name": "dfsddwee",
     	"email": "psychologist3@email.com",
-    	"password": "psypass3",
-    	"phone": "9999-8888",
-    	"licenseNumber": "license003",
+    	"password": "psypassss3",
+    	"phone": "9999-88488",
+    	"licenseNumber": "license005",
     	"specializationArea": "Animal Psychology",
-    	"biography": "Bio for Psychologist 3",
-    	"status": "ACTIVE"
+    	"biography": "Bio for Psychologist 3"
     }
 parameters:
   - id: pair_1e81fe596f254e90bfe1829627083edb

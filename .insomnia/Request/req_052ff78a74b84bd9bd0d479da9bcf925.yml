@@ -1,9 +1,9 @@
 _id: req_052ff78a74b84bd9bd0d479da9bcf925
 type: Request
 parentId: fld_3fe9112765124708bc081b69b9adb585
-modified: 1695599826178
+modified: 1696734039793
 created: 1695597427771
-url: "{{ _.base_url }}{{ _.base_route }}/6"
+url: "{{ _.base_url }}{{ _.base_route }}/2"
 name: DeleteSessionById
 description: ""
 method: DELETE
