@@ -1,6 +1,9 @@
 package com.moredevs.psychclinic.services.impl;
 
 import com.moredevs.psychclinic.models.dtos.AdminCreateDTO;
+import com.moredevs.psychclinic.models.dtos.AdminDTO;
+import com.moredevs.psychclinic.models.entities.Admin;
+import com.moredevs.psychclinic.repositories.AdminRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,14 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
-import com.moredevs.psychclinic.models.dtos.AdminDTO;
-import com.moredevs.psychclinic.models.entities.Admin;
-import com.moredevs.psychclinic.repositories.AdminRepository;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

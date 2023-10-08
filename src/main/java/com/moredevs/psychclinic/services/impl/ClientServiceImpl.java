@@ -6,7 +6,6 @@ import com.moredevs.psychclinic.models.dtos.ClientDTO;
 import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
 import com.moredevs.psychclinic.models.dtos.SessionDTO;
 import com.moredevs.psychclinic.models.entities.Client;
-import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.ClientRepository;
 import com.moredevs.psychclinic.services.ClientService;

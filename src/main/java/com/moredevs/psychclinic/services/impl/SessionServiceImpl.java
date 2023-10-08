@@ -218,8 +218,14 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        sessionRepository.deleteById(Long.valueOf(id));
+    public boolean deleteById(Integer id) {
+        try {
+            sessionRepository.deleteById(Long.valueOf(id));
+            return true;
+        } catch (Exception e) {
+            logger.error("Error deleting session with ID: " + id, e);
+            return false;
+        }
     }
 
     public List<SessionInPsychologistListDTO> findSessionsByPsychologistId(Integer psychologistId) {

@@ -10,9 +10,10 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
-import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Client.*;
+import static com.moredevs.psychclinic.utils.constants.ErrorConstants.Client.CLIENT_INSERTION_ERROR;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ClientServiceImplTest {
 

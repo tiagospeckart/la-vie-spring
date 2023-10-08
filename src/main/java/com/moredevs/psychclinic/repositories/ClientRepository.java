@@ -1,7 +1,6 @@
 package com.moredevs.psychclinic.repositories;
 
 import com.moredevs.psychclinic.models.entities.Client;
-import com.moredevs.psychclinic.models.entities.Psychologist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

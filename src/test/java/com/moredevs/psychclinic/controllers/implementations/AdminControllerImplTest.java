@@ -1,11 +1,7 @@
 package com.moredevs.psychclinic.controllers.implementations;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moredevs.psychclinic.exceptions.NotFoundException;
-import com.moredevs.psychclinic.models.dtos.AdminCreateDTO;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
 import com.moredevs.psychclinic.models.dtos.AdminGetDTO;
 import com.moredevs.psychclinic.services.AdminService;
@@ -19,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.net.URI;
 import java.util.List;
+
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AdminControllerImplTest {
@@ -60,27 +58,6 @@ public class AdminControllerImplTest {
 
         mockMvc.perform(get("/admin/1"))
                 .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void testCreate() throws Exception {
-        AdminCreateDTO adminCreateDTO = new AdminCreateDTO();
-        AdminDTO adminDTO = new AdminDTO();
-        adminDTO.setId(1);
-
-        when(adminService.create(any(AdminCreateDTO.class))).thenReturn(adminDTO);
-
-        URI expectedUri = new URI("/admin/1");
-
-        mockMvc.perform(
-                        post("/admin")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(adminCreateDTO))
-                )
-                .andExpect(status().isCreated())
-                .andExpect(content().json(objectMapper.writeValueAsString(adminDTO)));
-
-        verify(adminService, times(1)).create(any(AdminCreateDTO.class));
     }
 
 

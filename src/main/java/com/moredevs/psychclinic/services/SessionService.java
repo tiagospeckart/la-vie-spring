@@ -21,5 +21,5 @@ public interface SessionService {
     boolean completeSessionById(Integer sessionId);
     boolean cancelSessionById(Integer sessionId);
     SessionDTO rescheduleSessionById(Integer sessionId, LocalDateTime newDateTime);
-    void deleteById(Integer id);
+    boolean deleteById(Integer id);
 }

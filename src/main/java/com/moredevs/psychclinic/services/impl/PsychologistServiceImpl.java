@@ -5,7 +5,6 @@ import com.moredevs.psychclinic.models.dtos.*;
 import com.moredevs.psychclinic.models.entities.Psychologist;
 import com.moredevs.psychclinic.models.entities.Session;
 import com.moredevs.psychclinic.repositories.PsychologistRepository;
-import com.moredevs.psychclinic.repositories.SessionRepository;
 import com.moredevs.psychclinic.services.PsychologistService;
 import com.moredevs.psychclinic.services.SessionService;
 import com.moredevs.psychclinic.utils.EntityUtils;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
