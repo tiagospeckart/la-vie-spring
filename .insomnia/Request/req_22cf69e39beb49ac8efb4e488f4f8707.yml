@@ -1,10 +1,10 @@
-_id: req_ea0a0344e9664b239e84b10664939a53
+_id: req_22cf69e39beb49ac8efb4e488f4f8707
 type: Request
-parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1696734226893
-created: 1695513780074
-url: "{{ _.base_url }}{{ _.base_route }}/3"
-name: DeleteClientById
+parentId: fld_13e1f4fcccd34a0b91dd81d4c250df2e
+modified: 1696734148308
+created: 1695595849122
+url: "{{ _.base_url }}{{ _.base_route }}/2"
+name: DeletePsychologistById
 description: ""
 method: DELETE
 body: {}

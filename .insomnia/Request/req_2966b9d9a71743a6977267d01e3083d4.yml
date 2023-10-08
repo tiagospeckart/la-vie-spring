@@ -1,23 +1,15 @@
-_id: req_dc0d3bdcb8e8477a93812a179f58c063
+_id: req_2966b9d9a71743a6977267d01e3083d4
 type: Request
-parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1696734214577
-created: 1695513780075
-url: "{{ _.base_url }}{{ _.base_route }}"
-name: CreateClient
+parentId: fld_3fe9112765124708bc081b69b9adb585
+modified: 1696734030849
+created: 1695603685968
+url: "{{ _.base_url }}{{ _.base_route }}/7/{{ _.reschedule }}"
+name: RescheduleSession
 description: ""
-method: POST
+method: PUT
 body:
   mimeType: application/json
-  text: |-
-    {
-    	"name": "Hdjhkjqwee",
-    	"address": "Rua Sâo Paulo",
-    	"phone": "9999-7899",
-    	"email": "client3@emasail.com",
-    	"dateOfBirth": "1980-05-25",
-    	"observations": "Client 3 details"
-    }
+  text: '"2023-12-25T14:30:00"'
 parameters:
   - id: pair_1e81fe596f254e90bfe1829627083edb
     name: ""
@@ -29,7 +21,7 @@ headers:
   - name: User-Agent
     value: Insomnia/2023.5.7
 authentication: {}
-metaSortKey: -1695298841448
+metaSortKey: -1695298841404.25
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

@@ -1,0 +1,27 @@
+_id: req_4bf411a5516548749beb4f9cd6cdf15c
+type: Request
+parentId: fld_3fe9112765124708bc081b69b9adb585
+modified: 1695604103493
+created: 1695604070564
+url: "{{ _.base_url }}{{ _.base_route }}/3/{{ _.cancel }}"
+name: CancellSession
+description: ""
+method: PUT
+body: {}
+parameters:
+  - id: pair_1e81fe596f254e90bfe1829627083edb
+    name: ""
+    value: ""
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695298841407.375
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

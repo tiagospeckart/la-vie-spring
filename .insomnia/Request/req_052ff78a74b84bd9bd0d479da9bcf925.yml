@@ -1,10 +1,10 @@
-_id: req_ea0a0344e9664b239e84b10664939a53
+_id: req_052ff78a74b84bd9bd0d479da9bcf925
 type: Request
-parentId: fld_f4e0901b8e084b41be7db4c34fa07ef8
-modified: 1696734226893
-created: 1695513780074
-url: "{{ _.base_url }}{{ _.base_route }}/3"
-name: DeleteClientById
+parentId: fld_3fe9112765124708bc081b69b9adb585
+modified: 1696734039793
+created: 1695597427771
+url: "{{ _.base_url }}{{ _.base_route }}/2"
+name: DeleteSessionById
 description: ""
 method: DELETE
 body: {}
