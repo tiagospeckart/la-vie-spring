@@ -1,9 +1,9 @@
 _id: req_22cf69e39beb49ac8efb4e488f4f8707
 type: Request
 parentId: fld_13e1f4fcccd34a0b91dd81d4c250df2e
-modified: 1695595931373
+modified: 1696734148308
 created: 1695595849122
-url: "{{ _.base_url }}{{ _.base_route }}/3"
+url: "{{ _.base_url }}{{ _.base_route }}/2"
 name: DeletePsychologistById
 description: ""
 method: DELETE
