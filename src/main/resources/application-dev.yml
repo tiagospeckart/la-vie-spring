@@ -11,7 +11,6 @@ spring:
     password: ''
     driver-class-name: org.h2.Driver
   jpa:
-    show-sql: true
     properties:
       hibernate:
         format_sql: true

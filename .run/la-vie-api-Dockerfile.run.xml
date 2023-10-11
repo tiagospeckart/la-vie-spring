@@ -4,7 +4,6 @@
       <settings>
         <option name="imageTag" value="la-vie" />
         <option name="containerName" value="" />
-        <option name="commandLineOptions" value="" />
         <option name="sourceFilePath" value="Dockerfile" />
       </settings>
     </deployment>

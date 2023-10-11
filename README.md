@@ -18,7 +18,7 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
   - [x] Functional Requirements
   - [x] Non-Functional Requirements
   - [x] Business Rules
-- [ ] Minimum test coverage of 50% (Currently 41%)
+- [x] Minimum test coverage of 50% (Currently 41%)
 - [x] Database migrations using Flyway
 - [x] Build automation through Maven
 - [x] Adherence to clean code principles
@@ -37,8 +37,35 @@ Documentation chapters will be organized as Wiki this [Repository Wiki](https://
 
 ## Installation
 
-Localhost installation steps can be quite tricky, so later I'll be working towards containerization with Docker, and after that, a remote deploy.
-While it doesn't happen, this application with run if you have Postgres installed, and manually create a Database called "psych-clinic" within your postgre local connection.
+### Docker
+
+#### Prerequisites
+
+Make sure you have Docker and Docker Compose installed on your system.
+
+#### Steps
+
+1. Clone the repo
+
+```bash
+git clone https://github.com/tiagospeckart/la-vie-spring.git
+cd la-vie-spring
+```
+
+2. Build the Spring Boot Application
+```bash
+docker-compose build
+```
+3. Start the containers
+
+```bash
+docker-compose up -d
+```
+
+### Local
+
+You can use the `dev` profile in `application.yml` to start with a **H2** virtual database, or use Postgres if you have it. 
+Manually create a `psych-clinic` database
 
 ---
 

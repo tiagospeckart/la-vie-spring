@@ -1,6 +1,18 @@
 spring:
   profiles:
     active: dev
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        default_schema: la-vie
+    schemas: la-vie
+  flyway:
+    locations: classpath:db/migration
+    baseline-version: 1
+    schemas: la-vie
+    baseline-on-migrate: true
 
 management:
   endpoint:
@@ -17,3 +29,4 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
   version: 0.0.1
+

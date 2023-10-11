@@ -1,14 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/psych-clinic
+    url: jdbc:postgresql://db-postgresql:5432/psych-clinic
     username: postgres
     password: postgres
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-    properties:
-      hibernate:
-        default_schema: la-vie
-    schemas: la-vie
   flyway:
     schemas: la-vie
+    url: jdbc:postgresql://db-postgresql:5432/psych-clinic
+    user: postgres
+    password: postgres
