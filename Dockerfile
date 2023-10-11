@@ -26,7 +26,7 @@ RUN ./mvnw clean package -DskipTests || (echo "Maven build failed. Exiting." && 
 FROM ubuntu:latest as RUNTIME
 
 # Copy compiled WAR file and JDK from build stage
-COPY --from=BUILD /app/target/psych-clinic-0.0.1-SNAPSHOT.war /psych-clinic.war
+COPY --from=BUILD /app/target/psych-clinic-1.0.0-SNAPSHOT.war /psych-clinic.war
 COPY --from=BUILD /jdk-21 /jdk-21
 
 # Set up environment variables
