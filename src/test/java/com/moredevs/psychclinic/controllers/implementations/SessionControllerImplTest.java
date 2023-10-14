@@ -2,47 +2,43 @@ package com.moredevs.psychclinic.controllers.implementations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.moredevs.psychclinic.models.dtos.*;
 import com.moredevs.psychclinic.models.enums.SessionStatus;
 import com.moredevs.psychclinic.services.SessionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.time.LocalDateTime;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@RunWith(MockitoJUnitRunner.class)
 public class SessionControllerImplTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private SessionService sessionService;
 
-    private SessionGetDTO sampleSessionGetDTO;
-    private SessionCreateDTO sampleSessionCreateDTO;
-    private SessionDTO sampleSessionDTO;
+    @InjectMocks
+    private SessionControllerImpl sessionControllerImpl;
+
+    private MockMvc mockMvc;
 
     private ObjectMapper objectMapper;
 
@@ -50,20 +46,61 @@ public class SessionControllerImplTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        sampleSessionGetDTO = createSampleSessionGetDTO();
-        sampleSessionCreateDTO = createSampleSessionCreateDTO();
-        sampleSessionDTO = createSampleSessionDTO();
-
-        mockServiceBehavior();
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(sessionControllerImpl)
+                .build();
     }
 
-    private void mockServiceBehavior() {
+    @Test
+    public void shouldReturnSessionWhenIdIsFound() throws Exception {
+        SessionGetDTO sampleSessionGetDTO = createSampleSessionGetDTO();
         when(sessionService.findById(any(Integer.class))).thenReturn(sampleSessionGetDTO);
-        when(sessionService.create(any(SessionCreateDTO.class))).thenReturn(sampleSessionDTO);
-        when(sessionService.update(any(SessionDTO.class))).thenReturn(sampleSessionDTO);
+
+        MvcResult result = mockMvc.perform(get("/session/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(sampleSessionGetDTO));
     }
+
+    @Test
+    public void testCreate() throws Exception {
+        SessionCreateDTO sampleSessionCreateDTO = createSampleSessionCreateDTO();
+        SessionDTO sampleSessionDTO = createSampleSessionDTO();
+        when(sessionService.create(any(SessionCreateDTO.class))).thenReturn(sampleSessionDTO);
+
+        MvcResult result = mockMvc.perform(post("/session")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(sampleSessionCreateDTO)))
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(sampleSessionDTO));
+    }
+
+    @Test
+    public void testUpdateById() throws Exception {
+        SessionDTO sampleSessionDTO = createSampleSessionDTO();
+        when(sessionService.update(any(SessionDTO.class))).thenReturn(sampleSessionDTO);
+
+        MvcResult result = mockMvc.perform(put("/session/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(sampleSessionDTO)))
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(sampleSessionDTO));
+    }
+
+    // Helper methods for creating sample DTOs
 
     private SessionGetDTO createSampleSessionGetDTO() {
         return SessionGetDTO.builder()
@@ -105,45 +142,5 @@ public class SessionControllerImplTest {
                 .sessionNotes("Initial assessment conducted.")
                 .sessionStatus(SessionStatus.COMPLETED)
                 .build();
-    }
-
-
-    @Test
-    public void shouldReturnSessionWhenIdIsFound() throws Exception {
-        MvcResult result = mockMvc.perform(get("/session/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        MockHttpServletResponse response = result.getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(sampleSessionGetDTO));
-    }
-
-    @Test
-    public void testCreate() throws Exception {
-        MvcResult result = mockMvc.perform(post("/session")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(sampleSessionCreateDTO)))
-                .andReturn();
-
-        MockHttpServletResponse response = result.getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(sampleSessionDTO));
-    }
-
-    @Test
-    public void testUpdateById() throws Exception {
-        // Assuming your update URL and HTTP method
-        MvcResult result = mockMvc.perform(put("/session/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(sampleSessionDTO)))
-                .andReturn();
-
-        MockHttpServletResponse response = result.getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(sampleSessionDTO));
     }
 }
