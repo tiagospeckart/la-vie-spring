@@ -5,13 +5,13 @@ import com.moredevs.psychclinic.models.dtos.ClientCreateDTO;
 import com.moredevs.psychclinic.models.dtos.ClientDTO;
 import com.moredevs.psychclinic.models.dtos.ClientGetDTO;
 import com.moredevs.psychclinic.services.ClientService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ClientControllerImplTest {
 
     @Mock
@@ -31,19 +31,19 @@ public class ClientControllerImplTest {
     @InjectMocks
     private ClientControllerImpl clientControllerImpl;
 
-    @Autowired
     private MockMvc mockMvc;
 
     private ObjectMapper objectMapper;
 
-    @BeforeEach
-    void setUp() {
+    @Before // Use @Before instead of @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(clientControllerImpl).build();
         objectMapper = new ObjectMapper();
     }
 
     @Test
-    void testFindById_Found() throws Exception {
+    public void testFindById_Found() throws Exception {
         ClientGetDTO clientGetDTO = new ClientGetDTO();
         when(clientService.findById(any())).thenReturn(clientGetDTO);
 
@@ -53,7 +53,7 @@ public class ClientControllerImplTest {
     }
 
     @Test
-    void testFindById_NotFound() throws Exception {
+    public void testFindById_NotFound() throws Exception {
         when(clientService.findById(any())).thenReturn(null);
 
         mockMvc.perform(get("/client/1"))
@@ -61,7 +61,7 @@ public class ClientControllerImplTest {
     }
 
     @Test
-    void testCreateClient_Success() throws Exception {
+    public void testCreateClient_Success() throws Exception {
         ClientDTO createdClient = new ClientDTO();
         when(clientService.create(any())).thenReturn(createdClient);
 
@@ -73,7 +73,7 @@ public class ClientControllerImplTest {
     }
 
     @Test
-    void testListAll() throws Exception {
+    public void testListAll() throws Exception {
         List<ClientGetDTO> allClients = List.of(new ClientGetDTO(), new ClientGetDTO());
         when(clientService.listAll()).thenReturn(allClients);
 
@@ -84,10 +84,11 @@ public class ClientControllerImplTest {
     }
 
     @Test
-    void testDeleteById() throws Exception {
+    public void testDeleteById() throws Exception {
         doNothing().when(clientService).deleteById(any());
 
         mockMvc.perform(delete("/client/1"))
                 .andExpect(status().isNoContent());
     }
 }
+
