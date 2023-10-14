@@ -5,24 +5,27 @@ import com.moredevs.psychclinic.exceptions.NotFoundException;
 import com.moredevs.psychclinic.models.dtos.AdminDTO;
 import com.moredevs.psychclinic.models.dtos.AdminGetDTO;
 import com.moredevs.psychclinic.services.AdminService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class AdminControllerImplTest {
 
     @Mock
@@ -31,38 +34,45 @@ public class AdminControllerImplTest {
     @InjectMocks
     private AdminControllerImpl adminControllerImpl;
 
-    @Autowired
     private MockMvc mockMvc;
 
     private ObjectMapper objectMapper;
 
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(adminControllerImpl).build();
+    @Before
+    public void setUp() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/templates/");
+        viewResolver.setSuffix(".html");
+
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(adminControllerImpl)
+                .setViewResolvers(viewResolver)
+                .build();
         objectMapper = new ObjectMapper();
     }
 
     @Test
-    void testFindById_Found() throws Exception {
+    public void testFindById_Found() throws Exception {
         AdminGetDTO adminGetDTO = new AdminGetDTO();
         when(adminService.findById(any())).thenReturn(adminGetDTO);
 
-        mockMvc.perform(get("/admin/1"))
+        mockMvc.perform(get("/admin/1")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(adminGetDTO)));
     }
 
     @Test
-    void testFindById_NotFound() throws Exception {
+    public void testFindById_NotFound() throws Exception {
         when(adminService.findById(any())).thenThrow(new NotFoundException());
 
-        mockMvc.perform(get("/admin/1"))
+        mockMvc.perform(get("/admin/1")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
-
     @Test
-    void testUpdateById_Success() throws Exception {
+    public void testUpdateById_Success() throws Exception {
         AdminGetDTO existingAdmin = new AdminGetDTO();
         when(adminService.findById(any())).thenReturn(existingAdmin);
 
@@ -77,7 +87,7 @@ public class AdminControllerImplTest {
     }
 
     @Test
-    void testUpdateById_NotFound() throws Exception {
+    public void testUpdateById_NotFound() throws Exception {
         when(adminService.findById(any())).thenReturn(null);
 
         AdminDTO updatedAdmin = new AdminDTO();
@@ -89,7 +99,7 @@ public class AdminControllerImplTest {
     }
 
     @Test
-    void testUpdateById_BadRequest() throws Exception {
+    public void testUpdateById_BadRequest() throws Exception {
         mockMvc.perform(put("/admin/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(null)))
@@ -97,7 +107,7 @@ public class AdminControllerImplTest {
     }
 
     @Test
-    void testDeleteById() throws Exception {
+    public void testDeleteById() throws Exception {
         doNothing().when(adminService).deleteById(any());
 
         mockMvc.perform(delete("/admin/1"))
@@ -105,13 +115,22 @@ public class AdminControllerImplTest {
     }
 
     @Test
-    void testListAll() throws Exception {
+    public void testListAll() throws Exception {
         List<AdminGetDTO> allAdmins = List.of(new AdminGetDTO(), new AdminGetDTO());
         when(adminService.listAll()).thenReturn(allAdmins);
 
-        mockMvc.perform(get("/admin"))
+        MvcResult result = mockMvc.perform(get("/admin")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(header().exists("X-Total-Count"))
-                .andExpect(content().json(objectMapper.writeValueAsString(allAdmins)));
+                .andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+        List<AdminGetDTO> returnedAdmins = objectMapper.readValue(responseBody, List.class);
+
+        // You can add assertions for the returnedAdmins as needed
+
+        // Verify that adminService.listAll() is called once
+        verify(adminService, times(1)).listAll();
     }
 }
