@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminServiceImplTest {
+
     @Mock
     private AdminRepository adminRepository;
 
@@ -33,6 +35,7 @@ public class AdminServiceImplTest {
 
     @Before
     public void setup() {
+        MockitoAnnotations.initMocks(this); // Initialize Mockito annotations
         adminDTO = new AdminDTO();
         admin = new Admin();
     }
@@ -40,7 +43,7 @@ public class AdminServiceImplTest {
     @Test
     public void testCreateAdmin() {
         AdminCreateDTO adminCreateDTO = new AdminCreateDTO();
-        when(mapper.map(adminCreateDTO, Admin.class)).thenReturn(admin);  // changed from adminDTO
+        when(mapper.map(adminCreateDTO, Admin.class)).thenReturn(admin);
         when(adminRepository.save(admin)).thenReturn(admin);
         when(mapper.map(admin, AdminDTO.class)).thenReturn(adminDTO);
 
