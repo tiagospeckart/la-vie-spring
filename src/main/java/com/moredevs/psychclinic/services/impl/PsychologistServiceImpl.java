@@ -144,7 +144,7 @@ public class PsychologistServiceImpl implements PsychologistService {
     public void softDeletePsychologistById(Integer id) {
         Optional<Psychologist> optionalPsychologist = psychologistRepository.findById(id);
 
-        if(optionalPsychologist.isPresent()) {
+        if (optionalPsychologist.isPresent()) {
             Psychologist psychologist = optionalPsychologist.get();
             psychologist.setIsDeleted(true);
             psychologistRepository.save(psychologist);

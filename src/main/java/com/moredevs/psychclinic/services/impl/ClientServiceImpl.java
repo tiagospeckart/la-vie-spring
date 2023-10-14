@@ -140,7 +140,7 @@ public class ClientServiceImpl implements ClientService {
     public void softDeleteClientById(Integer id) {
         Optional<Client> optionalClient = clientRepository.findById(id);
 
-        if(optionalClient.isPresent()) {
+        if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
             client.setIsDeleted(true);
             clientRepository.save(client);

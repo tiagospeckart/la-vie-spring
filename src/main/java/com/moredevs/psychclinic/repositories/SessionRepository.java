@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface SessionRepository extends JpaRepository<Session, Long>, JpaSpecificationExecutor<Session> {
     List<Session> findAllByClientId(Integer clientId);
+
     List<Session> findAllByPsychologistId(Integer psychologistId);
+
     List<Session> findAllByClientIdAndPsychologistId(Integer clientId, Integer psychologistId);
 }

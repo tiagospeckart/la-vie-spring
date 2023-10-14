@@ -42,8 +42,6 @@ public class SessionServiceImplTest {
     private ModelMapper modelMapper;
 
 
-
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);

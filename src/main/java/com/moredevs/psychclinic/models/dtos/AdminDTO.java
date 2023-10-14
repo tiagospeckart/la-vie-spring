@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class AdminDTO extends BaseAuditDTO{
+public class AdminDTO extends BaseAuditDTO {
     private Integer id;
     private String email;
     private String password;

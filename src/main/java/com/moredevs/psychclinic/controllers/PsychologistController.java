@@ -9,8 +9,12 @@ import java.util.List;
 
 public interface PsychologistController {
     ResponseEntity<PsychologistDTO> create(PsychologistCreateDTO psychologistCreateDTO);
+
     ResponseEntity<PsychologistDTO> updateById(Integer id, PsychologistDTO updatingPsychologist);
+
     ResponseEntity<PsychologistGetDTO> findById(Integer id);
+
     ResponseEntity<List<PsychologistGetDTO>> listAll();
+
     ResponseEntity<Void> deleteById(Integer id);
 }

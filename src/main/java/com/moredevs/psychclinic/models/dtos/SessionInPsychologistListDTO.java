@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SessionInPsychologistListDTO{
+public class SessionInPsychologistListDTO {
     private String clientName;
     private LocalDateTime dateAndTime;
     private String sessionNotes;

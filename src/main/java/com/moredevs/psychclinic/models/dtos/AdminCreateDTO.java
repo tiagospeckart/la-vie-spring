@@ -23,7 +23,7 @@ public class AdminCreateDTO {
     @Schema(description = "Password for the Admin", example = "SecureP@ss123")
     @NotNull(message = "Password must not be null")
     @NotBlank(message = "Password must not be blank")
-    @Size(min = 8, max = 30, message = "Password must be between 8 and 30 characters")  // Assuming PASSWORD_MIN_SIZE=8, PASSWORD_MAX_SIZE=30
+    @Size(min = 8, max = 30, message = "Password must be between 8 and 30 characters")
     private String password;
 
     @Schema(description = "Phone number of the Admin", example = "+1-555-555-5555")

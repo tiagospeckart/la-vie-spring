@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PsychClinicApplication {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(PsychClinicApplication.class, args);
-	}
+        SpringApplication.run(PsychClinicApplication.class, args);
+    }
 
 }

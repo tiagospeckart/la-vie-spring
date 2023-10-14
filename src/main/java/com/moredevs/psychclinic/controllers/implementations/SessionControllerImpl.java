@@ -161,7 +161,7 @@ public class SessionControllerImpl implements SessionController {
                     @ApiResponse(responseCode = "200", description = "Sessions listed")
             })
     public ResponseEntity<List<SessionGetDTO>> listClientPsychologistSessionsById(@PathVariable Integer clientId,
-                                                                               @PathVariable Integer psychologistId) {
+                                                                                  @PathVariable Integer psychologistId) {
         List<SessionGetDTO> sessions = sessionService.listClientPsychologistSessionsById(clientId, psychologistId);
         return ResponseEntity.ok(sessions);
     }

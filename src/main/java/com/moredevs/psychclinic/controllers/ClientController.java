@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface ClientController {
     ResponseEntity<ClientDTO> create(ClientCreateDTO clientCreateDTO);
+
     ResponseEntity<ClientGetDTO> findById(Integer id);
+
     ResponseEntity<List<ClientGetDTO>> listAll();
+
     ResponseEntity<ClientDTO> updateById(Integer id, ClientDTO updatingClientDTO);
 
     ResponseEntity<Void> deleteById(Integer id);

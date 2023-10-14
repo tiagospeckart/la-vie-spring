@@ -27,7 +27,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 public class PsychologistControllerImplTest {
@@ -163,7 +164,8 @@ public class PsychologistControllerImplTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
         String responseBody = response.getContentAsString();
-        List<PsychologistGetDTO> returnedPsychologists = objectMapper.readValue(responseBody, new TypeReference<List<PsychologistGetDTO>>() {});
+        List<PsychologistGetDTO> returnedPsychologists = objectMapper.readValue(responseBody, new TypeReference<List<PsychologistGetDTO>>() {
+        });
 
         assertThat(returnedPsychologists.size()).isEqualTo(1);
 

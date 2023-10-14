@@ -10,3 +10,6 @@ spring:
     url: jdbc:postgresql://db-postgresql:5432/psych-clinic
     user: postgres
     password: postgres
+    locations: classpath:db/migration-postgres
+    baseline-version: 1
+    baseline-on-migrate: true

@@ -8,9 +8,14 @@ import java.util.List;
 
 public interface ClientService {
     ClientDTO create(ClientCreateDTO clientDTO);
+
     ClientDTO save(ClientCreateDTO clientDTO);
+
     ClientGetDTO findById(Integer id);
+
     List<ClientGetDTO> listAll();
+
     ClientDTO update(ClientDTO updatingClientDTO);
+
     void deleteById(Integer id);
 }

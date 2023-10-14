@@ -40,7 +40,7 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public ResponseEntity<AdminGetDTO> findById(@PathVariable Integer id) {
         AdminGetDTO adminGetDTO = adminService.findById(id);
-        if (adminGetDTO == null){
+        if (adminGetDTO == null) {
             throw new NotFoundException();
         }
         return ResponseEntity.ok(adminGetDTO);
