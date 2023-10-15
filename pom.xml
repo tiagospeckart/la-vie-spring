@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.moredevs</groupId>
 	<artifactId>psych-clinic</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>psych-clinic</name>
 	<description>MVP for a psychology clinic system</description>
