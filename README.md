@@ -1,6 +1,7 @@
 # la-vie-spring
 
 ![Java build CI with Maven](https://github.com/tiagospeckart/la-vie-spring/actions/workflows/build.yml/badge.svg)
+![Maven Tests passed](https://github.com/tiagospeckart/la-vie-spring/actions/workflows/test.yml/badge.svg)
 
 Backend server MVP that manages a REST API for a psychotherapy clinic.
 
