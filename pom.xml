@@ -15,7 +15,7 @@
 	<description>MVP for a psychology clinic system</description>
 	<scm>
 		<connection>scm:git:git@github.com:tiagospeckart/la-vie-spring.git</connection>
-		<developerConnection>scm:git:git@github.com:tiagospeckart/la-vie-spring.git</developerConnection>
+		<developerConnection>scm:git:ssh@github.com:tiagospeckart/la-vie-spring.git</developerConnection>
 		<url>http://github.com/tiagospeckart/la-vie-spring</url>
 		<tag>psych-clinic-1.0.0</tag>
 	</scm>
