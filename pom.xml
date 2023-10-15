@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.moredevs</groupId>
 	<artifactId>psych-clinic</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>psych-clinic</name>
 	<description>MVP for a psychology clinic system</description>
@@ -17,7 +17,7 @@
 		<connection>scm:git:git@github.com:tiagospeckart/la-vie-spring.git</connection>
 		<developerConnection>scm:git:git@github.com:tiagospeckart/la-vie-spring.git</developerConnection>
 		<url>http://github.com/tiagospeckart/la-vie-spring</url>
-		<tag>1.0.0</tag>
+		<tag>psych-clinic-1.0.0</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
