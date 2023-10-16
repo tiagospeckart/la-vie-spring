@@ -21,7 +21,7 @@ Created as part of the SpringBoot module in the +Devs2Blu program, 2023.
   - [x] Functional Requirements
   - [x] Non-Functional Requirements
   - [x] Business Rules
-- [x] Minimum test coverage of 50% (Currently 41%)
+- [x] Minimum test coverage of 50% (Currently 54%)
 - [x] Database migrations using Flyway
 - [x] Build automation through Maven
 - [x] Adherence to clean code principles
